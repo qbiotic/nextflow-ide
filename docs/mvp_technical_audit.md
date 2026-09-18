@@ -11,16 +11,20 @@ What is already in place:
 - An Nx and TypeScript workspace with the first package boundaries already scaffolded.
 - A prioritized backlog and phased implementation plan.
 - A nine-project monorepo skeleton under `packages/` aligned to the intended architecture.
+- Canonical run, artifact, and workspace contracts in `domain` and typed MVP ports in `application`.
+- Vitest configured through Nx for domain unit tests and architecture tests.
+- Package and section READMEs established as implementation deliverables.
 
 What is still missing:
 
-- Real domain rules and application use cases beyond placeholder contracts.
+- Real domain behavior and application use cases beyond the current contracts.
 - Architecture enforcement tests for forbidden imports and dependency direction.
 - Real VS Code activation, commands, views, runtime adapters, and persistence implementations.
 - Test targets and MVP fixtures.
-- Ongoing documentation synchronization as implementation advances.
+- Real extension-level end-to-end test harness using `@vscode/test-electron`.
+- Ongoing synchronization of root, package, and section documentation as implementation advances.
 
-The correct next move is to implement the first behavior slice inside `domain` and `application`, while keeping every repository document synchronized with the evolving codebase.
+The correct next move is to add architecture enforcement and implement the first real behavior slice inside `domain` and `application`, while keeping every repository document synchronized with the evolving codebase.
 
 ## Current State Assessment
 
@@ -39,6 +43,8 @@ The correct next move is to implement the first behavior slice inside `domain` a
 4. The MVP still depends on a stable run model and runtime port contracts with real implementations.
 5. The extension composition root exists as a shell and must now be wired to real use cases and adapters.
 6. There is still no architecture test harness for forbidden imports, run state transitions, or command-building behavior.
+7. The repository now has enough canonical contracts to start implementing the first use cases without reopening structural decisions.
+8. Tests and documentation now have an explicit toolchain and ownership boundary, but coverage must expand with each implementation slice.
 
 ### Readiness Verdict
 
@@ -363,7 +369,7 @@ Acceptance check:
 
 ### Step 2. Lock architecture rules
 
-Status: next.
+Status: in progress.
 
 Deliverables:
 
@@ -377,7 +383,7 @@ Acceptance check:
 
 ### Step 3. Implement the domain core
 
-Status: next.
+Status: in progress.
 
 Deliverables:
 
@@ -391,7 +397,7 @@ Acceptance check:
 
 ### Step 4. Implement application ports and use cases
 
-Status: next.
+Status: in progress.
 
 Deliverables:
 
@@ -535,10 +541,10 @@ Do not build these before the first smoke path exists:
 ## Immediate Next Actions
 
 1. Replace placeholder types in `domain` with the real run model and state invariants.
-2. Implement the first inbound and outbound ports in `application`.
-3. Add architecture tests before implementing the first runtime adapter.
-4. Wire the local runtime path first and keep Docker behind the runtime Strategy port.
-5. Update README, backlog, plan, and this audit in the same change set as each implementation slice.
+2. Expand architecture tests to cover all core and adapter dependency directions.
+3. Implement the first real use cases in `application` on top of the new contracts.
+4. Add `@vscode/test-electron` when the first executable extension command exists.
+5. Update root, package, and section READMEs plus backlog, plan, and this audit in the same change set as each implementation slice.
 
 ## Decision
 

@@ -5,5 +5,12 @@
   "projectType": "library",
   "tags": ["scope:test", "type:test-utils"],
   "// targets": "to see all targets run: nx show project test-utils --web",
-  "targets": {}
+  "targets": {
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vitest run --config vitest.config.mts packages/test-utils/tests/architecture.test.ts"
+      }
+    }
+  }
 }

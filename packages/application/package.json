@@ -16,6 +16,7 @@
     }
   },
   "dependencies": {
+    "@nextflow-ide/domain": "workspace:*",
     "tslib": "^2.3.0"
   }
 }

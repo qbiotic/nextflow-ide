@@ -12,12 +12,17 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 2. P0 | TODO | Tech: Define official-extension coexistence contract (activation, command namespace, fallback behavior).
 3. P0 | TODO | Docs: Define NFR baseline (startup latency target, run launch responsiveness, supported OS matrix).
 4. P1 | TODO | Docs: Define telemetry and privacy defaults for beta.
-5. P0 | TODO | Docs: Keep README, backlog, implementation plan, technical audit, and pending decisions synchronized with each implementation change.
+5. P0 | IN PROGRESS | Docs: Keep README, package READMEs, backlog, implementation plan, technical audit, and pending decisions synchronized with each implementation change.
+
+**Testing and Documentation Standards**
+- P0 | DONE | Test: Select Vitest for unit and architecture tests, with Nx `test` targets.
+- P0 | IN PROGRESS | Docs: Add a README to every package and architectural source section, including Mermaid diagrams and testing guidance.
 
 **Architecture constraint - Hexagonal Design**
-- P0 | IN PROGRESS | Tech: Define domain model and inbound/outbound port contracts before implementing adapters.
+- P0 | DONE | Tech: Define domain model and inbound/outbound port contracts before implementing adapters.
 - P0 | IN PROGRESS | Tech: Define the extension composition root and dependency direction checks.
 - P1 | TODO | Test: Add architecture tests preventing domain/application imports from VS Code, Node process APIs, Docker, or adapter modules.
+- P0 | DONE | Test: Add initial domain state-machine tests and architecture dependency tests.
 
 **Epic 1 - Extension Skeleton and Activation**
 6. P0 | IN PROGRESS | Tech: Create extension entrypoint module boundaries (activation, command registration, service container).
@@ -27,7 +32,7 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 10. P1 | TODO | Test: Add detection tests for representative project layouts.
 
 **Epic 2 - Runtime Adapter (Local + Docker)**
-9. P0 | TODO | Tech: Define runtime adapter interface (prepare command, launch, monitor, stop, resume).
+9. P0 | DONE | Tech: Define runtime adapter interface (prepare command, launch, monitor, stop, resume).
 10. P0 | TODO | Feature: Implement local runtime provider (macOS/Linux).
 11. P0 | TODO | Feature: Implement Docker runtime provider.
 12. P0 | TODO | Tech: Add deterministic command builder with safe argument escaping.
@@ -35,8 +40,8 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 14. P1 | TODO | Tech: Add preflight checks (nextflow binary, docker availability when selected).
 
 **Epic 3 - Run State and Persistence**
-15. P0 | TODO | Tech: Define run lifecycle states (queued/running/succeeded/failed/canceled/resumable).
-16. P0 | TODO | Tech: Design run metadata schema (id, command, params snapshot, timestamps, workspace context).
+15. P0 | DONE | Tech: Define run lifecycle states (queued/running/succeeded/failed/canceled/resumable).
+16. P0 | DONE | Tech: Design run metadata schema (id, command, params snapshot, timestamps, workspace context).
 17. P0 | TODO | Feature: Persist run records in workspace/user state with version tag.
 18. P1 | TODO | Tech: Add migration mechanism for persisted schema versions.
 19. P1 | TODO | Test: Add state-transition tests and persistence compatibility tests.
@@ -77,4 +82,4 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 6. Automated tests cover command construction, state transitions, and MVP smoke path.
 7. Domain and application code are independent of VS Code, Node process APIs, Docker, and concrete persistence adapters.
 8. Runtime selection, persistence, and external integrations are replaceable through explicit ports.
-9. README, backlog, implementation plan, technical audit, and pending decisions documents reflect the current repository state after each implementation step.
+9. README, package READMEs, backlog, implementation plan, technical audit, and pending decisions documents reflect the current repository state after each implementation step.

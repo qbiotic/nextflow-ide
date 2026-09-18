@@ -5,10 +5,9 @@
   "scripts": {
     "build": "nx run-many -t build",
     "typecheck": "nx run-many -t typecheck",
-    "test": "node -e \"console.log('No test targets configured yet')\""
+    "test": "nx run-many -t test"
   },
   "private": true,
-  "dependencies": {},
   "devDependencies": {
     "@nx/js": "23.2.1",
     "@swc/helpers": "~0.5.18",
@@ -16,6 +15,7 @@
     "nx": "23.2.1",
     "prettier": "~3.6.2",
     "tslib": "^2.3.0",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
   }
 }

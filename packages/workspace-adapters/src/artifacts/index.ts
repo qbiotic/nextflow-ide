@@ -1,4 +1,7 @@
+import type { ArtifactKind } from '@nextflow-ide/domain';
+
 export interface ArtifactLocation {
-  kind: 'report' | 'trace' | 'timeline';
+  kind: ArtifactKind;
   path: string;
+  exists: boolean;
 }

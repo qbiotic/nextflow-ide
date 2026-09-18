@@ -1,17 +1,38 @@
-import type { ResumeRunRequest, RunPipelineRequest, StopRunRequest } from '../../dto/index.js';
+import type {
+  DetectWorkspaceRequest,
+  DetectWorkspaceResult,
+  GetRunHistoryRequest,
+  GetRunHistoryResult,
+  ListArtifactsRequest,
+  ListArtifactsResult,
+  ResumeRunRequest,
+  ResumeRunResult,
+  RunPipelineRequest,
+  RunPipelineResult,
+  StopRunRequest,
+  StopRunResult
+} from '../../dto/index.js';
 
 export interface RunPipelineUseCase {
-  execute(request: RunPipelineRequest): Promise<void>;
+  execute(request: RunPipelineRequest): Promise<RunPipelineResult>;
 }
 
 export interface ResumeRunUseCase {
-  execute(request: ResumeRunRequest): Promise<void>;
+  execute(request: ResumeRunRequest): Promise<ResumeRunResult>;
 }
 
 export interface StopRunUseCase {
-  execute(request: StopRunRequest): Promise<void>;
+  execute(request: StopRunRequest): Promise<StopRunResult>;
 }
 
 export interface DetectWorkspaceUseCase {
-  execute(workspaceRoot: string): Promise<void>;
+  execute(request: DetectWorkspaceRequest): Promise<DetectWorkspaceResult>;
+}
+
+export interface GetRunHistoryUseCase {
+  execute(request: GetRunHistoryRequest): Promise<GetRunHistoryResult>;
+}
+
+export interface ListArtifactsUseCase {
+  execute(request: ListArtifactsRequest): Promise<ListArtifactsResult>;
 }
