@@ -15,6 +15,8 @@ The `application` package coordinates user-facing use cases without knowing how 
 
 The application layer may depend on `@nextflow-ide/domain`. It must not import infrastructure APIs or concrete adapter packages.
 
+The executable dependency rule is tested by `packages/test-utils/tests/architecture.test.ts`.
+
 ## Hexagonal Flow
 
 ```mermaid

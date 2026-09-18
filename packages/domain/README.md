@@ -15,6 +15,8 @@ The `domain` package is the framework-free core of the Nextflow IDE. It owns bus
 
 This package must not import VS Code APIs, Node process or filesystem APIs, Docker libraries, adapter packages, or application services.
 
+The executable dependency rule is tested by `packages/test-utils/tests/architecture.test.ts`.
+
 ## Data Flow
 
 ```mermaid

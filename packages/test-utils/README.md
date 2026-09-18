@@ -23,4 +23,4 @@ flowchart LR
 
 ## Testing
 
-The package itself contains architecture tests and should remain deterministic and side-effect free.
+The package itself contains architecture tests and should remain deterministic and side-effect free. The architecture suite scans every TypeScript file under package `src` directories and verifies the allowed dependency matrix, infrastructure isolation, and composition-root direction.

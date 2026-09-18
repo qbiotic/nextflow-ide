@@ -13,18 +13,18 @@ What is already in place:
 - A nine-project monorepo skeleton under `packages/` aligned to the intended architecture.
 - Canonical run, artifact, and workspace contracts in `domain` and typed MVP ports in `application`.
 - Vitest configured through Nx for domain unit tests and architecture tests.
+- Recursive architecture tests enforce the package dependency matrix and composition-root boundary.
 - Package and section READMEs established as implementation deliverables.
 
 What is still missing:
 
 - Real domain behavior and application use cases beyond the current contracts.
-- Architecture enforcement tests for forbidden imports and dependency direction.
 - Real VS Code activation, commands, views, runtime adapters, and persistence implementations.
 - Test targets and MVP fixtures.
 - Real extension-level end-to-end test harness using `@vscode/test-electron`.
 - Ongoing synchronization of root, package, and section documentation as implementation advances.
 
-The correct next move is to add architecture enforcement and implement the first real behavior slice inside `domain` and `application`, while keeping every repository document synchronized with the evolving codebase.
+The next move is to implement the first real behavior slice inside `domain` and `application`, while keeping every repository document synchronized with the evolving codebase.
 
 ## Current State Assessment
 
@@ -42,7 +42,7 @@ The correct next move is to add architecture enforcement and implement the first
 3. The package-first layout under `packages/*` is now the canonical repository structure and should replace any older `apps/` sketches.
 4. The MVP still depends on a stable run model and runtime port contracts with real implementations.
 5. The extension composition root exists as a shell and must now be wired to real use cases and adapters.
-6. There is still no architecture test harness for forbidden imports, run state transitions, or command-building behavior.
+6. Architecture tests now enforce forbidden imports, package dependency direction, and the composition-root boundary.
 7. The repository now has enough canonical contracts to start implementing the first use cases without reopening structural decisions.
 8. Tests and documentation now have an explicit toolchain and ownership boundary, but coverage must expand with each implementation slice.
 
@@ -369,7 +369,7 @@ Acceptance check:
 
 ### Step 2. Lock architecture rules
 
-Status: in progress.
+Status: done.
 
 Deliverables:
 
@@ -541,10 +541,9 @@ Do not build these before the first smoke path exists:
 ## Immediate Next Actions
 
 1. Replace placeholder types in `domain` with the real run model and state invariants.
-2. Expand architecture tests to cover all core and adapter dependency directions.
-3. Implement the first real use cases in `application` on top of the new contracts.
-4. Add `@vscode/test-electron` when the first executable extension command exists.
-5. Update root, package, and section READMEs plus backlog, plan, and this audit in the same change set as each implementation slice.
+2. Implement the first real use cases in `application` on top of the new contracts.
+3. Add `@vscode/test-electron` when the first executable extension command exists.
+4. Update root, package, and section READMEs plus backlog, plan, and this audit in the same change set as each implementation slice.
 
 ## Decision
 
