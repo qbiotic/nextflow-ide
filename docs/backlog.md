@@ -20,12 +20,12 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 
 **Architecture constraint - Hexagonal Design**
 - P0 | DONE | Tech: Define domain model and inbound/outbound port contracts before implementing adapters.
-- P0 | IN PROGRESS | Tech: Define the extension composition root and dependency direction checks.
-- P1 | TODO | Test: Add architecture tests preventing domain/application imports from VS Code, Node process APIs, Docker, or adapter modules.
+- P0 | DONE | Tech: Define the extension composition root and dependency direction checks.
+- P1 | DONE | Test: Add architecture tests preventing domain/application imports from VS Code, Node process APIs, Docker, or adapter modules.
 - P0 | DONE | Test: Add initial domain state-machine tests and architecture dependency tests.
 
 **Epic 1 - Extension Skeleton and Activation**
-6. P0 | IN PROGRESS | Tech: Create extension entrypoint module boundaries (activation, command registration, service container).
+6. P0 | DONE | Tech: Create extension entrypoint module boundaries (activation, command registration, service container).
 7. P0 | DONE | Tech: Scaffold Nx packages for domain, application, adapters, UI contracts, test utilities, and the VS Code extension.
 8. P0 | TODO | Feature: Implement Nextflow workspace detection for single-root and multi-root.
 9. P0 | TODO | Feature: Add activation events scoped to Nextflow projects.
