@@ -1,110 +1,74 @@
-# NextflowIde
+# Nextflow IDE for VS Code
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A developer-focused IDE experience for **Nextflow** built on top of **Visual Studio Code** and organized as an **Nx monorepo**.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+This project aims to turn VS Code into a dedicated environment for developing, configuring, running, debugging, and inspecting Nextflow pipelines locally. Nextflow already has official VS Code language support for diagnostics, navigation, formatting, schema checks, and DAG previews; this project focuses on the missing operational layer: local execution UX, run management, artifact access, and developer workflows. [web:166][web:202][web:240]
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Goals
 
-## Generate a library
+- Provide a smooth local development experience for Nextflow pipelines.
+- Reduce friction between editing code and running pipelines.
+- Add a visual workflow for configuring runs, starting executions, monitoring logs, and opening artifacts.
+- Build on VS Code conventions instead of creating a separate desktop app.
+- Keep the architecture modular and scalable using Nx and TypeScript. [web:228][web:224]
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
+## Scope
 
-## Run tasks
+This repository is intended to host:
 
-To build the library use:
+- A VS Code extension for Nextflow local execution workflows.
+- Shared TypeScript libraries for domain models, runtime contracts, and messaging.
+- Webview-based UI modules for run configuration, history, artifacts, and diagnostics.
+- Tooling and infrastructure for building, testing, and packaging the extension.
 
-```sh
-npx nx build pkg1
-```
+This project does **not** aim to replace the official Nextflow VS Code extension. Instead, it is designed to complement it with execution-oriented workflows and a richer local IDE experience. [web:166][web:202]
 
-To run any task with Nx use:
+## Why Nx
 
-```sh
-npx nx <target> <project-name>
-```
+Nx is used to structure the codebase as a monorepo with clear boundaries between applications and shared packages. Nx is particularly well suited for TypeScript monorepos, supports project references, caching, and scalable task execution, and works well with custom workspace structures. [web:228][web:224][web:237]
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+Expected benefits:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- Clear separation between extension code, UI code, and shared libraries.
+- Easier reuse of contracts and domain logic.
+- Faster builds and test execution through caching.
+- Better long-term maintainability as the plugin grows. [web:228][web:238]
 
-## Versioning and releasing
+## Planned features
 
-To version and release the library use
+The initial product direction includes:
 
-```
-npx nx release
-```
+- Workspace detection for Nextflow projects.
+- Guided run configuration from within VS Code.
+- One-click local execution and resume flows.
+- Live log streaming.
+- Run history and saved presets.
+- Artifact discovery for reports, traces, timelines, DAGs, and work directories.
+- A richer debugging workflow for failed runs.
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+Related ecosystems already provide parts of this experience: the official Nextflow extension provides language intelligence and project views, while community tools such as Nextflow Sandbox add utilities for running and inspecting pipelines. This project aims to unify and extend those workflows into a more complete IDE-style experience. [web:166][web:173][web:176]
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## High-level architecture
 
-## Keep TypeScript project references up to date
+The planned architecture has four major parts:
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+1. **VS Code extension host** for commands, workspace integration, process orchestration, and state management.
+2. **Nextflow runtime integration** for launching and tracking local CLI executions.
+3. **Webview UI** for parameter forms, run dashboards, history, and artifacts.
+4. **Language intelligence integration** through the official Nextflow language server and extension ecosystem. [web:187][web:162][web:166]
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+## Monorepo layout
 
-```sh
-npx nx sync
-```
+A likely structure for this workspace is:
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+```text
+apps/
+  vscode-extension/
+  webview-shell/
 
-```sh
-npx nx sync:check
-```
-
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+packages/
+  shared-types/
+  domain-model/
+  runtime/
+  ui-contracts/
+  test-utils/
