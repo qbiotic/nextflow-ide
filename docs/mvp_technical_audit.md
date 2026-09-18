@@ -18,13 +18,13 @@ What is already in place:
 
 What is still missing:
 
-- Real domain behavior and application use cases beyond the current contracts.
+- Remaining domain behavior and application use cases beyond `DetectWorkspace` and `RunPipeline`.
 - Real VS Code activation, commands, views, runtime adapters, and persistence implementations.
-- Test targets and MVP fixtures.
+- MVP workspace and runtime fixtures for adapter and end-to-end tests.
 - Real extension-level end-to-end test harness using `@vscode/test-electron`.
 - Ongoing synchronization of root, package, and section documentation as implementation advances.
 
-The next move is to implement the first real behavior slice inside `domain` and `application`, while keeping every repository document synchronized with the evolving codebase.
+The first application behavior slice is now implemented. The next move is to build the workspace detection adapter and deterministic command builder behind the existing ports.
 
 ## Current State Assessment
 
@@ -383,7 +383,7 @@ Acceptance check:
 
 ### Step 3. Implement the domain core
 
-Status: in progress.
+Status: done for the current run model and transition rules.
 
 Deliverables:
 
@@ -397,7 +397,7 @@ Acceptance check:
 
 ### Step 4. Implement application ports and use cases
 
-Status: in progress.
+Status: in progress; `DetectWorkspace` and `RunPipeline` are implemented.
 
 Deliverables:
 
@@ -540,10 +540,11 @@ Do not build these before the first smoke path exists:
 
 ## Immediate Next Actions
 
-1. Replace placeholder types in `domain` with the real run model and state invariants.
-2. Implement the first real use cases in `application` on top of the new contracts.
-3. Add `@vscode/test-electron` when the first executable extension command exists.
-4. Update root, package, and section READMEs plus backlog, plan, and this audit in the same change set as each implementation slice.
+1. Implement the workspace detection adapter and its fixture tests.
+2. Implement the deterministic local/Docker command builder.
+3. Add the remaining run lifecycle use cases on top of the existing ports.
+4. Add `@vscode/test-electron` when the first executable extension command exists.
+5. Update root, package, and section READMEs plus backlog, plan, and this audit in the same change set as each implementation slice.
 
 ## Decision
 

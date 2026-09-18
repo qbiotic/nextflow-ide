@@ -4,6 +4,14 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 
 ## [Unreleased] 2026-09-??
 
+### feature/application-use-cases
+
+- Implemented `DetectWorkspaceService` with typed positive and negative detection results.
+- Implemented `RunPipelineService` with command preparation, queued-run persistence, runtime launch, running-state update, and started-event publication.
+- Added isolated application tests using fake ports for workspace detection and pipeline launch behavior.
+- Added an application Nx test target and verified 4 application tests pass.
+- Updated application READMEs, backlog, and technical audit to reflect the implemented use cases and the next adapter work.
+
 ### feature/arq-rules
 
 - Implemented recursive architecture checks across all nine Nx packages.

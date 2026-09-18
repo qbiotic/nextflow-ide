@@ -30,8 +30,8 @@ flowchart LR
 
 ## MVP Use Cases
 
-- `DetectWorkspace`
-- `RunPipeline`
+- `DetectWorkspace` is implemented by `DetectWorkspaceService` and returns a typed project or a `not-nextflow-workspace` reason.
+- `RunPipeline` is implemented by `RunPipelineService`; it prepares a command, persists a queued run, starts the runtime, updates the run to `running`, and publishes a started event.
 - `ResumeRun`
 - `StopRun`
 - `GetRunHistory`
@@ -39,7 +39,7 @@ flowchart LR
 
 ## Testing
 
-Use cases will be tested with fake outbound ports. No application test should require VS Code, Docker, a real Nextflow binary, or a real workspace.
+Use cases are tested with fake outbound ports in `tests/use-cases.test.ts`. No application test requires VS Code, Docker, a real Nextflow binary, or a real workspace.
 
 ## Sections
 
