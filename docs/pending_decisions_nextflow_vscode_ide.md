@@ -1,3 +1,287 @@
+# Pending Decisions for the Nextflow VS Code IDE
+
+## Executive Summary
+
+The product's basic architecture is already reasonably well defined: a VS Code extension with a lightweight TypeScript/Node client, integration with the Nextflow language server, and rich panels built with webviews. However, several critical decisions are still needed to turn the idea into an executable product with controlled risk. What remains to be settled is primarily product, scope, experience, compatibility, security, and validation strategy rather than technology.[cite:166][cite:161][cite:162]
+
+The repository scaffold now exists, so these are no longer blockers for starting all coding. They are blockers for finishing the MVP cleanly without rework and must be kept synchronized with implementation progress.
+
+The current situation is favorable because official Nextflow support already exists in VS Code and partial solutions such as Nextflow Sandbox are also available, allowing development to move faster and avoiding a start from zero. Precisely for that reason, the product's differentiating gap and the boundaries between what is reused, complemented, and built from scratch must be defined more precisely.[cite:166][cite:173][cite:176]
+
+## 1. Product Definition
+
+The first pending area is the formal product definition. Before adding more technical detail, the team must agree on who the IDE is for, which problem it solves first, and why that problem is not already sufficiently covered by the CLI, the official extension, or existing community tools. Product and architecture planning guidance emphasizes that objectives, deliverables, and success criteria should be explicit before intensive execution begins.[cite:200][cite:205][cite:206]
+### Pending Decisions
+
+- Primary persona: individual developer, bioinformatician, nf-core maintainer, platform engineer, academic team, or platform team.
+- Initial segment: advanced local users, small teams, training, enterprise adoption, or the open source community.
+- Primary problem: simpler local execution, debugging, artifact visualization, reducing friction between editing and running, or preparing for remote execution.
+- Main value proposition: “local IDE for developing and running Nextflow” versus “visual execution platform”.
+- Positioning: complement to Seqera Platform and the official extension, or a more complete integrated experience inside VS Code.
+
+### Recommended Deliverables
+
+- A one- to three-page PRD.
+- Definition of primary and secondary personas.
+- Prioritized list of jobs to be done.
+- Map of current problems in the CLI workflow.
+- Value matrix against existing solutions.[cite:166][cite:173][cite:176]
+## 2. MVP Functional Scope
+
+The second pending area is to close the MVP definition precisely. Without this definition, the main risk is building an overly broad solution that replicates many existing ecosystem capabilities without delivering a truly polished experience. A strong MVP should focus on a clear and measurable value sequence.[cite:205][cite:206]
+
+### Pending Decisions
+
+- Exact flow for v1: open a project, configure parameters, run, follow logs, open artifacts, and resume.
+- Explicitly excluded functions: multi-user collaboration, advanced remote observability, visual DAG editing, cloud synchronization, and distributed compute management.
+- Operations supported in the first version: `run`, `resume`, `log`, artifact opening, presets, and history.
+- Configuration formats: `nextflow.config`, manual parameters, `.json` files, `.yaml` files, and `params-file`.
+- Artifact types indexed from day one: `report`, `trace`, `timeline`, DAG, outputs, and `work/`.
+
+### Recommended Deliverables
+
+- MoSCoW requirements list.
+- Version 1 in/out matrix.
+- Five to eight user stories with acceptance criteria.
+- Closed MVP scope document.
+## 3. Relationship with the Official Nextflow Extension
+
+One of the most strategic remaining decisions is how the product will coexist with the official Nextflow VS Code extension. The official extension already provides highlighting, navigation, completion, diagnostics, formatting, a project view, and DAG preview, so the new product should avoid duplicating value unnecessarily.[cite:166][cite:202]
+
+### Pending Decisions
+
+- Whether the IDE will be installed as a complementary extension or as an integrated experience that assumes the official extension.
+- Whether official language-server capabilities will be reused or encapsulated through custom adapters.
+- Whether the experience will be unified or use separate panels.
+- How possible conflicts involving commands, views, icons, or activation will be resolved.
+- Which language-support capabilities are considered external and which will be developed inside the new product.
+
+### Recommended Deliverables
+
+- Integration strategy document.
+- Functional dependency map with the official extension.
+- Compatibility risk list and mitigation plan.[cite:166]
+## 4. Detailed Functional Specification
+
+Beyond the high-level MVP, a concrete functional specification is still needed. Product and architecture definition guidance generally recommends making functional requirements and acceptance criteria explicit before sustained development, especially for tools with multiple workflows and states.[cite:200][cite:205]
+
+### Areas Requiring Detail
+
+- Automatic Nextflow workspace detection.
+- Discovery of `main.nf`, configurations, modules, and profiles.
+- Parameters: editing, validation, presets, defaults, and reuse.
+- Execution: launch, stop, retry, resume, and logs.
+- Results: indexing, opening, filtering, and classification.
+- History: recent runs, comparison, and configuration duplication.
+- Diagnostics: execution errors, configuration errors, and contextual help.
+- Opening terminals, folders, and HTML reports.
+
+### Recommended Deliverables
+
+- Functional specification by module.
+- Main flows in step-by-step format.
+- Acceptance criteria for each screen or feature.
+## 5. Non-Functional Requirements
+
+Non-functional requirements are not yet defined precisely enough. Without them, it is difficult to make sound decisions about performance, compatibility, security, persistence, and remote support. Architecture and roadmap documentation generally identifies this layer as essential to avoid costly redesigns later.[cite:200][cite:205]
+
+### Pending Decisions
+
+- Acceptable performance in large workspaces.
+- Maximum time to detect a project.
+- Target time to start an execution from the UI.
+- Minimum operating-system support: macOS, Linux, and Windows.
+- Minimum VS Code version support.
+- Local support versus remote environments (SSH, containers, and Codespaces).
+- Resilience when the language server fails or the Nextflow binary is missing.
+- Persistence policy and maximum history size.
+
+### Recommended Deliverables
+
+- Prioritized NFR list.
+- Technical compatibility table.
+- Performance and memory budget.
+## 6. UX and Interaction Design
+
+The architecture already proposes webviews, panels, and side views, but these still need to be translated into a concrete user experience. VS Code recommends using webviews only when they provide clear value and paying particular attention to their integration with the editor's visual language and interaction patterns.[cite:162][cite:165]
+
+### Pending Decisions
+
+- Main visual structure: sidebar, bottom panel, right-side views, tabs, or dedicated panels.
+- Exact “Run pipeline” flow.
+- Exact “Run failed” flow.
+- Information shown in the initial state before any runs exist.
+- Representation of presets and history.
+- How HTML artifacts and system folders are opened.
+- Which parts use native VS Code UI and which require a webview.
+
+### Recommended Deliverables
+
+- Complete user flows.
+- Low-fidelity wireframes.
+- Navigable prototype of key screens.
+- Catalog of empty, loading, error, and success states.
+## 7. Runtime and Execution Model
+
+Another major pending definition is the exact runtime model. The plugin will rely on the Nextflow CLI, but it has not yet been decided how far it will automate environments, profiles, containers, and execution configuration. Nextflow is a highly flexible orchestration layer, and that flexibility can become complex if the first version is not bounded carefully.[cite:163]
+
+### Pending Decisions
+
+- How the `nextflow` binary is resolved.
+- How the absence of Nextflow is detected.
+- How the final command is built from the UI.
+- Which profiles are discovered automatically.
+- What support exists for Docker, Conda, Singularity/Apptainer, and pure local execution.
+- How each run is identified and indexed.
+- How artifacts are linked to a specific run.
+- Plugin behavior in remote workspaces.
+
+### Recommended Deliverables
+
+- Local runtime specification.
+- Execution sequence diagram.
+- Decision table for each supported environment.
+## 8. Data Model and Persistence
+
+The conceptual data model has been sketched, but it still needs to become a complete development specification. This matters because features such as history, presets, run comparison, and state recovery depend heavily on a coherent model from the beginning.
+
+### Pending Decisions
+
+- Final entities: `WorkspaceProject`, `Run`, `RunConfiguration`, `Profile`, `Artifact`, `ExecutionEvent`, and related entities.
+- Which data is persisted at user level and which at workspace level.
+- How persisted configurations are versioned.
+- How old history is cleaned up.
+- Which data is sensitive and must not be stored.
+
+### Recommended Deliverables
+
+- Logical entity schema.
+- Shared TypeScript contracts.
+- Persistence and migration policy.
+## 9. Security
+
+Security is not yet sufficiently specified, and it is critical because the plugin will execute local commands. VS Code documents both its runtime security model for extensions and specific recommendations for telemetry and responsible Marketplace behavior.[cite:198][cite:203]
+
+### Pending Decisions
+
+- Exact operations the plugin may launch.
+- How the final command is shown to the user before execution.
+- How parameters are validated and escaped.
+- Restrictions on opening paths and files.
+- Which UI parts are considered trusted or untrusted.
+- Whether a safe or read-only mode will exist.
+
+### Recommended Deliverables
+
+- Lightweight threat model.
+- Command-execution policy.
+- Webview and host security checklist.
+## 10. Telemetry, Analytics, and Privacy
+
+Telemetry policy is another pending decision. Microsoft provides explicit guidance for extension authors on enabling telemetry while respecting user preferences. If the product wants to learn from real usage, this decision should not be improvised at the end.[cite:198]
+
+### Pending Decisions
+
+- Whether telemetry will be collected.
+- Events collected: run started, run failed, artifact opened, panel usage, and feature adoption.
+- How information is anonymized.
+- How the policy is communicated to users.
+- Which product metrics are essential.
+
+### Recommended Deliverables
+
+- Privacy policy.
+- Event schema.
+- Metrics list enabled during beta.
+## 11. Publication and Distribution Strategy
+
+The product's publication and distribution model also needs to be defined. VS Code has requirements and protections around runtime, security, and the Marketplace, so it is advisable to decide early whether the plugin will be private, closed beta, pre-release, or public.[cite:203]
+
+### Pending Decisions
+
+- Initial channel: private, closed beta, pre-release, or public Marketplace.
+- Versioning policy.
+- Minimum VS Code compatibility.
+- Update and changelog strategy.
+- Installation and support documentation.
+
+### Recommended Deliverables
+
+- Release plan.
+- Semantic versioning policy.
+- Publication checklist.
+## 12. Competitive Benchmark and Differentiation
+
+Although reference products have already been identified, a more systematic benchmark is still needed. The existence of the official Nextflow extension and tools such as Nextflow Sandbox makes it necessary to define more precisely the exclusive value the product will deliver.[cite:166][cite:173][cite:176]
+
+### Pending Decisions
+
+- Which tasks are currently slower or more cumbersome with the CLI alone.
+- What the official extension covers well and what it does not.
+- What Nextflow Sandbox covers and how well.
+- Which differentiated experience to build: better UX, better integration, better observability, fewer steps, or stronger local focus.
+
+### Recommended Deliverables
+
+- Competitive comparison table.
+- Product gap matrix.
+- Differentiation narrative document.
+## 13. Validation and Beta Strategy
+
+Before entering a long development cycle, an explicit validation plan is also needed. Modern roadmap and product-development guidance recommends validating hypotheses, users, and workflows before committing too much investment to implementation.[cite:204][cite:205][cite:206]
+
+### Pending Decisions
+
+- Number of beta users to invite.
+- Beta tester profiles.
+- Tasks they must test.
+- Metrics to collect.
+- Signals that determine whether to continue, pivot, or reduce scope.
+
+### Recommended Deliverables
+
+- Interview plan.
+- Closed-beta plan.
+- Usability-test script.
+- Validation metrics dashboard.
+## 14. Project Organization and Team
+
+Although a general structure has already been proposed, the practical execution model still needs to be defined. Roles, cadence, technical ownership, and decision-making mechanisms should be settled. Product roadmaps often fail not because of a lack of ideas, but because of unclear governance.[cite:205][cite:206]
+
+### Pending Decisions
+
+- Product owner.
+- Person responsible for deciding MVP scope.
+- Owner of the execution layer.
+- UX owner.
+- Bug-versus-feature prioritization process.
+- Planning and release cadence.
+
+### Recommended Deliverables
+
+- Simplified RACI.
+- Planning and review cadence.
+- Prioritized initial backlog.
+## Recommended Order for Resolving Pending Items
+
+The pending work should be addressed in this order because it reduces uncertainty before implementation begins:
+
+1. PRD and target-user definition.
+2. MVP functional scope.
+3. Coexistence strategy with the official extension.
+4. Main UX flows and wireframes.
+5. Local/remote runtime specification.
+6. Non-functional requirements and compatibility.
+7. Security and telemetry.
+8. Data model and persistence.
+9. Beta plan and metrics.
+10. Publication strategy.
+
+This order helps avoid one of the most common risks in developer tools: building substantial infrastructure before value, scope, and success criteria have been settled.[cite:205][cite:206]
+
+## Final Recommendation
+
+The most valuable next action is not to produce more isolated technical detail, but to turn these pending areas into a closed set of product definitions. The best next deliverable would be a short but complete package containing a PRD, an MVP specification, an integration document for the official extension, key wireframes, and a runtime model definition. With that package, the project would move from a “well-directed idea” to a product ready for sprint planning.[cite:166][cite:205][cite:206]
 # Definiciones pendientes para el IDE de Nextflow basado en VS Code
 
 ## Resumen ejecutivo

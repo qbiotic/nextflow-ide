@@ -1,0 +1,9 @@
+{
+  "name": "vscode-extension",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/vscode-extension/src",
+  "projectType": "library",
+  "tags": ["scope:edge", "layer:extension"],
+  "// targets": "to see all targets run: nx show project vscode-extension --web",
+  "targets": {}
+}

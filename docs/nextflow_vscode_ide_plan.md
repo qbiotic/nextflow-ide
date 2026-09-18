@@ -1,4 +1,160 @@
-# Plan de desarrollo de un IDE completo para Nextflow basado en VS Code
+# Development Plan for a Complete Nextflow IDE Based on VS Code
+
+## Product Vision
+
+The proposed product is a specialized IDE for Nextflow built on the Visual Studio Code platform, using its extension engine, editor, integrated terminal, and webviews to provide a unified experience for local pipeline development, execution, debugging, and observability. The technical foundation is particularly strong because Nextflow already has official VS Code integration for language support, project navigation, diagnostics, and DAG visualization, reducing foundational work and allowing the project to focus on experience, execution, and local operations.[cite:161][cite:166]
+
+The goal is not to replace Seqera Platform, but to address a different space: a developer-focused desktop environment optimized for editing, launching, iterating, debugging, and understanding pipelines locally or in environments close to the workstation. Seqera Platform focuses on centralized execution, management, and monitoring at scale, while a VS Code-based IDE can maximize iteration speed, direct file-system access, and proximity between code and execution.[cite:185][cite:166]
+
+## Value Proposition
+
+The main value proposition is to turn the Nextflow workflow into an integrated editor flow: write code, validate, parameterize, run, follow logs, open artifacts, inspect failures, and resume executions without leaving the environment. VS Code supports rich views through webviews and custom panels, so an extension can effectively behave as a vertical mini-IDE inside the editor.[cite:162][cite:165]
+
+The advantages over a web platform are clear for local work: less friction, native access to paths, profiles, work files, and outputs, a better debugging experience, offline use, and an almost immediate transition between editing and execution. The advantage over a standalone Electron app is that VS Code already provides the editor, file explorer, extension system, terminal, themes, shortcuts, and stable distribution, greatly reducing the initial project scope.[cite:167][cite:174]
+
+## Priority Use Cases
+
+The product's use cases should prioritize users who develop or maintain pipelines and need to run them locally frequently. The most important are: create or open a Nextflow project, detect `main.nf` and `nextflow.config`, edit with language support, configure parameters and profiles, launch a local execution, review live logs, open reports such as `timeline`, `trace`, or `report`, inspect the `work` directory, resume a failed execution, and compare configurations between runs.[cite:166][cite:173]
+
+A second group of use cases focuses on debugging and learning: visualize the pipeline DAG, navigate between modules, review syntax and configuration errors, inspect commands executed by processes, and access failure context more easily. Official Nextflow VS Code integration already provides a useful foundation for several of these flows, especially language and project structure.[cite:161][cite:166][cite:177]
+
+## MVP Functional Scope
+
+The MVP should be deliberately narrow so that it reaches a useful version quickly. The recommended minimum capabilities are: automatic Nextflow project detection, a side panel with pipelines and recent runs, a parameter form, profile selection, work and output directory selection, Run/Resume/Stop buttons, a live console, a list of generated artifacts, and quick access to `report.html`, `timeline.html`, `trace.txt`, and the `work` directory.[cite:173][cite:166]
+
+This scope already addresses a real need: run and debug pipelines from one place. Anything involving multi-user collaboration, large-scale observability, complex remote queues, organizational controls, or compute governance should remain outside the MVP because that territory belongs more to Seqera Platform than to a local IDE.[cite:185]
+
+## Product Architecture
+
+The recommended architecture is a VS Code extension with four layers. The first is the VS Code host integration layer, containing commands, extension activation, project detection, terminal or task interaction, and panel and view registration. The second is a domain layer containing business logic: pipeline detection, profile resolution, execution history, configuration reading, and parameter normalization.[cite:167][cite:162]
+
+The third is the execution layer, which should encapsulate interaction with the `nextflow` binary, preferably through controlled child processes or the VS Code terminal depending on the use case. The fourth is the interface layer, built with webviews for forms, status panels, execution dashboards, and result views; Microsoft documents webviews as the mechanism for building fully customized interfaces inside VS Code.[cite:162][cite:165]
+
+## Main Modules
+
+### 1. Extension Core
+
+This module manages the extension lifecycle: activation, detection of relevant workspaces, command registration, tree providers, and panel providers. It also decides when to show the Nextflow experience and when to remain inactive so that unrelated projects are not disrupted. The official Nextflow VS Code ecosystem already includes a project view and language capabilities, so this core should be designed to coexist with the official extension and, where possible, complement it instead of duplicating it.[cite:166][cite:179]
+
+### 2. Project Detection and Workspace Model
+
+This module identifies whether a workspace contains a Nextflow pipeline, indexes key files, and builds a logical model of the project: entry points, modules, configurations, profiles, and known artifacts. It should detect at least `main.nf`, `nextflow.config`, possible modules, and conventional directories. The official extension's project view demonstrates the value of exposing a structured view of the pipeline inside VS Code.[cite:166]
+
+### 3. Execution Manager
+
+This is the operational heart of the IDE. It must build the `nextflow run` command from visual configuration, launch it, capture stdout and stderr, expose execution state, support cancellation, and, where appropriate, relaunch with `-resume`. Part of this module may use VS Code terminals or integrated tasks so the experience remains consistent with the rest of the editor.[cite:167][cite:168]
+
+### 4. Parameter Panel
+
+This module translates an execution configuration into a clear form. In the MVP it may start from a manual or semi-automatic project parameter definition; later phases could infer more information from conventions or schemas. The key is to transform a command-line experience into a repeatable visual configuration, with presets that can be saved per user or workspace.
+
+### 5. Local Console and Observability
+
+This module should present real-time logs, aggregate status, execution milestones, and shortcuts to the main artifacts. Later phases may show an event timeline, active tasks, per-process durations, and a pipeline status summary. It does not replace the web platform's advanced observability, but it substantially improves local feedback during development.[cite:185]
+
+### 6. Results and Artifacts
+
+This module indexes each run's results and makes it easy to open `report`, `timeline`, `trace`, DAGs, and output folders. An important goal is to reduce the time between “the execution finished” and “I understand what happened”. The IDE's practical value increases significantly when opening artifacts takes one click instead of manual file-system navigation.
+
+### 7. History and Persistence
+
+This module should save recent executions, used parameters, profiles, paths, and basic state. VS Code provides workspace- and user-level persistence mechanisms, which are a good fit for storing history and recent configurations without introducing a complex database.[cite:167]
+
+### 8. Optional Seqera Platform Integration
+
+Although it is outside the MVP, a clear boundary for a future optional Seqera Platform integration should be designed from the beginning. This would allow the local IDE to remain the place for editing and launching while selected runs could be submitted to or monitored through the web layer when needed. This coexistence fits Seqera Platform's current positioning as a control center for pipelines and environments.[cite:185]
+
+## User Experience
+
+The experience should feel like a vertical IDE, not an embedded form. The recommended structure is: a left side panel with the project view and runs; a central editor for `.nf` files and configuration; a bottom panel for the console, problems, and execution events; and a right or lower-right panel for parameters and run summary. This pattern uses the mental model already familiar to VS Code users.[cite:167][cite:162]
+
+The five most important UX flows are as follows. First, “open a project and understand it”: automatic detection, pipeline view, and shortcuts. Second, “configure and launch”: parameter form, profiles, and paths with a command preview. Third, “follow the execution”: live logs, status, and artifacts. Fourth, “it failed”: access to the error, involved process, work path, and resume or folder-opening actions. Fifth, “run it again”: recover and compare previous configurations.
+
+## Integration with the Official Nextflow Extension
+
+The most effective strategy is to coexist with the official extension rather than compete with it in the first phase. The official extension already covers language support, diagnostics, navigation, formatting, a structured project view, and DAG visualization; duplicating those capabilities would greatly increase cost without proportionally increasing initial value.[cite:166][cite:161]
+
+The proposal is therefore to treat the official extension as the editing and static-analysis layer and build the execution, observability, and operational UX layer on top. From a product perspective, this reduces time to market and focuses development on the area that appears to have the largest gap: an integrated “develop and run locally” experience with a coherent interface.[cite:166][cite:177]
+
+## Roadmap by Phase
+
+## Phase 0: Discovery and Definition
+
+Estimated duration: two to three weeks. Objectives: user interviews, analysis of existing extensions, scope definition, architecture, and success criteria. Deliverables: PRD, flow map, technical architecture, wireframes, and prioritized backlog. This phase should carefully evaluate both the official Nextflow extension and community tools such as Nextflow Sandbox to avoid rebuilding already-solved functions.[cite:166][cite:173]
+
+## Phase 1: Foundation Platform
+
+Estimated duration: three to four weeks. Objectives: extension skeleton, contextual activation, project detection, pipeline side view, base commands, and minimal persistence. Deliverables: development-installable extension, basic project tree, empty runs panel, and the first visible commands in the Command Palette.[cite:167]
+
+## Phase 2: Local Execution MVP
+
+Estimated duration: four to six weeks. Objectives: minimal parameter form, command construction, `nextflow run` execution, log streaming, cancellation, `-resume`, recent history, and artifact opening. Deliverable: the first complete functional flow of edit -> run -> observe -> resume.
+
+## Phase 3: Debugging and Artifacts
+
+Estimated duration: four weeks. Objectives: improve the error panel, navigate to processes, open work directories directly, automatically index `trace`, `timeline`, and `report`, and improve configuration persistence. Deliverable: a substantially stronger failure and re-execution experience.
+
+## Phase 4: Complete Vertical IDE
+
+Estimated duration: five to eight weeks. Objectives: execution presets, saved profiles, run comparison, advanced status panel, local metrics, better support for multiple pipelines per workspace, and richer previews. Deliverable: a beta version of a genuinely differentiated “Nextflow IDE”.
+
+## Phase 5: Advanced Integrations
+
+Estimated duration: six to ten weeks. Objectives: optional Seqera Platform integration, remote support, profile import/export, optional telemetry, stable distribution packages, and security hardening. This phase makes sense only once the local core has demonstrated clear value over the traditional workflow.[cite:185]
+
+## Recommended Team
+
+A minimum effective team for reaching a useful beta could include a lead extension/TypeScript engineer, an engineer experienced with local processes and developer tooling, a product designer familiar with IDEs and technical workflows, and part-time QA or an engineer focused on automated testing. With a very limited budget, one senior full-stack engineer with VS Code extension experience can start the MVP, but dedicated design substantially improves speed and UX quality.[cite:167][cite:162]
+
+It would also be valuable to have a Nextflow domain expert as an advisor or beta partner. Product correctness depends not only on extension code, but also on understanding how users work with profiles, configurations, resumption, modules, and runtime errors.
+
+## Recommended Technical Stack
+
+The main stack should be TypeScript for the entire extension, using the official VS Code API for commands, tree views, workspace state, and webviews. Panel UIs can use React or a lightweight webview library; React is usually worthwhile if several complex panels and shared state are expected.[cite:162][cite:167]
+
+For execution, Node and `child_process` are sufficient in most scenarios. For storage, VS Code's own persistence covers many MVP needs. For testing, combine unit tests for command logic with extension integration tests and real scenarios using example pipelines.
+
+## Data Model
+
+The product needs a clear data model from the start. The minimum entities are: Workspace, Pipeline, RunConfiguration, Run, Artifact, Profile, and ParameterDefinition. Each Run should store at least an identifier, date, workspace, pipeline, resolved command, parameters used, profile, state, relevant paths, exit code, and the list of discovered artifacts.
+
+Separating RunConfiguration from Run is important so that reusable presets can be saved and compared with actual executions. This distinction will later be essential for features such as “rerun with modifications”, configuration duplication, and comparison between two executions.
+
+## Security and Permissions
+
+An extension that executes local commands has a higher risk profile than a purely visual extension. Therefore, the product should make the final command, work path, selected profile, and origin of any interpolated parameter visible to the user. Command transparency is a practical measure of security and trust.
+
+Webviews should follow VS Code security guidance: strict communication between extension and panel, a minimized exposed surface, and careful control of rendered content. Microsoft explicitly documents webviews as powerful but isolated containers that require specific UX and security practices.[cite:162][cite:165]
+
+## Testing and Quality
+
+The quality plan should include four levels. First, unit tests for command construction, configuration parsing, and path normalization. Second, extension integration tests for commands, panels, and persistence. Third, end-to-end tests with small example pipelines actually executed. Fourth, manual UX testing with Nextflow users of different experience levels.
+
+A compatibility matrix for macOS, Linux, and Windows should be prepared as early as possible, even if the first beta focuses on macOS and Linux when the target audience allows it. Nextflow runtime behavior and system paths can vary by platform, so cross-platform testing should not be delayed too long.[cite:163]
+
+## Success Metrics
+
+The most useful metrics are not only technical but also behavioral. Key examples include time from opening a project to launching the first run, number of manual steps saved compared with the CLI alone, proportion of executions launched from the UI versus the terminal, frequency of `resume` use, average time to locate an error, and weekly retention of beta users.
+
+The product should also measure which panels are actually used: parameter form, history, artifact opening, live console, run comparison, and project view. This will help determine whether the product should move toward a complete vertical IDE or remain a narrowly focused extension.
+
+## Main Risks
+
+The first risk is building too much, too broadly, too early. The natural temptation is to replicate every Nextflow CLI possibility and end up with a confusing interface. The second risk is unnecessary overlap with the official extension, wasting time on language support that already exists.[cite:166]
+
+The third risk is underestimating generic parameterization: not all pipelines describe parameters uniformly, so a universal form generator may be fragile. The fourth risk is that part of the value of a visual platform may already be partially covered by community extensions such as Nextflow Sandbox. This makes it even more important to focus the proposal on integrated, coherent UX rather than merely adding buttons.[cite:173][cite:176]
+
+## Launch Strategy
+
+The best launch strategy is to begin with a closed beta for advanced Nextflow users who work locally frequently. They should be able to compare the current CLI workflow honestly and identify whether the UI truly accelerates daily work. That validation matters more than a broad initial launch.
+
+Initial distribution can use a private extension or pre-release in the VS Code ecosystem. Once the product handles the core value well—launching, following, debugging, and resuming local pipelines—it will make sense to prepare public documentation, short videos, and clear positioning against Seqera Platform: integrated local development versus centralized orchestration.[cite:167][cite:185]
+
+## Final Recommendation
+
+The recommendation is to build a VS Code extension first rather than an independent Electron app. The strategic reason is that the VS Code ecosystem already provides nearly all the infrastructure required for an IDE, and Nextflow already has official support there. This dramatically reduces construction cost and lets the project focus on the actual product gap: an integrated local execution and debugging experience.[cite:161][cite:166][cite:174]
+
+The best sequence is to integrate with and leverage the official extension, build a strong local execution and observability MVP, validate it with real users, and only then decide whether the product should remain an advanced extension or evolve into a more autonomous application. This route minimizes risk, accelerates learning, and maximizes the likelihood of producing a genuinely useful tool.[cite:166][cite:173][cite:185]# Plan de desarrollo de un IDE completo para Nextflow basado en VS Code
 
 ## Visión del producto
 

@@ -57,18 +57,34 @@ The planned architecture has four major parts:
 3. **Webview UI** for parameter forms, run dashboards, history, and artifacts.
 4. **Language intelligence integration** through the official Nextflow language server and extension ecosystem. [web:187][web:162][web:166]
 
+The implementation follows **hexagonal architecture (Ports and Adapters)**. Domain rules and application use cases remain independent from VS Code, Node.js, Docker, the Nextflow CLI, the file system, and persistence. Concrete integrations are outbound adapters selected through explicit ports and assembled at the extension composition root. Inbound adapters expose commands and typed webview messages to the application layer.
+
+Core patterns include Use Case/Application Service, Strategy for runtime providers, Factory for validated run configurations and commands, State Machine for run lifecycle, Repository for persistence, Anti-Corruption Layer for external event translation, Observer for execution events, and Dependency Injection at the composition root.
+
 ## Monorepo layout
 
-A likely structure for this workspace is:
+Current workspace structure:
 
 ```text
-apps/
-  vscode-extension/
-  webview-shell/
-
 packages/
-  shared-types/
-  domain-model/
-  runtime/
+  application/
+  domain/
+  lsp-adapters/
+  runtime-adapters/
+  state-adapters/
   ui-contracts/
   test-utils/
+  vscode-extension/
+  workspace-adapters/
+```
+
+
+The workspace currently keeps all first-class Nx projects under `packages/`. The VS Code extension is the outer composition root, while `domain` and `application` remain isolated from infrastructure-specific adapters.
+
+## Documentation sync policy
+
+Documentation is part of the implementation scope, not a follow-up activity.
+
+- Every implementation change must update the affected architecture, plan, audit, backlog, and README documents in the same change set when their described state or decisions change.
+- No scaffold or feature step is complete if it leaves contradictory repository documentation behind.
+- If a document becomes historical rather than current, it must be labeled accordingly instead of silently drifting.

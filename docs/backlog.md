@@ -12,12 +12,19 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 2. P0 | TODO | Tech: Define official-extension coexistence contract (activation, command namespace, fallback behavior).
 3. P0 | TODO | Docs: Define NFR baseline (startup latency target, run launch responsiveness, supported OS matrix).
 4. P1 | TODO | Docs: Define telemetry and privacy defaults for beta.
+5. P0 | TODO | Docs: Keep README, backlog, implementation plan, technical audit, and pending decisions synchronized with each implementation change.
+
+**Architecture constraint - Hexagonal Design**
+- P0 | IN PROGRESS | Tech: Define domain model and inbound/outbound port contracts before implementing adapters.
+- P0 | IN PROGRESS | Tech: Define the extension composition root and dependency direction checks.
+- P1 | TODO | Test: Add architecture tests preventing domain/application imports from VS Code, Node process APIs, Docker, or adapter modules.
 
 **Epic 1 - Extension Skeleton and Activation**
-5. P0 | TODO | Tech: Create extension entrypoint module boundaries (activation, command registration, service container).
-6. P0 | TODO | Feature: Implement Nextflow workspace detection for single-root and multi-root.
-7. P0 | TODO | Feature: Add activation events scoped to Nextflow projects.
-8. P1 | TODO | Test: Add detection tests for representative project layouts.
+6. P0 | IN PROGRESS | Tech: Create extension entrypoint module boundaries (activation, command registration, service container).
+7. P0 | DONE | Tech: Scaffold Nx packages for domain, application, adapters, UI contracts, test utilities, and the VS Code extension.
+8. P0 | TODO | Feature: Implement Nextflow workspace detection for single-root and multi-root.
+9. P0 | TODO | Feature: Add activation events scoped to Nextflow projects.
+10. P1 | TODO | Test: Add detection tests for representative project layouts.
 
 **Epic 2 - Runtime Adapter (Local + Docker)**
 9. P0 | TODO | Tech: Define runtime adapter interface (prepare command, launch, monitor, stop, resume).
@@ -68,3 +75,6 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 4. User can access available core artifacts (report/trace/timeline).
 5. Behavior is valid with and without the official Nextflow extension installed.
 6. Automated tests cover command construction, state transitions, and MVP smoke path.
+7. Domain and application code are independent of VS Code, Node process APIs, Docker, and concrete persistence adapters.
+8. Runtime selection, persistence, and external integrations are replaceable through explicit ports.
+9. README, backlog, implementation plan, technical audit, and pending decisions documents reflect the current repository state after each implementation step.

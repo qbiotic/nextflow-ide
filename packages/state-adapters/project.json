@@ -1,0 +1,9 @@
+{
+  "name": "state-adapters",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/state-adapters/src",
+  "projectType": "library",
+  "tags": ["scope:adapters", "type:state"],
+  "// targets": "to see all targets run: nx show project state-adapters --web",
+  "targets": {}
+}

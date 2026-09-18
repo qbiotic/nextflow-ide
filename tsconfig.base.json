@@ -13,6 +13,17 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "paths": {
+      "@nextflow-ide/application": ["./packages/application/src/index.ts"],
+      "@nextflow-ide/domain": ["./packages/domain/src/index.ts"],
+      "@nextflow-ide/lsp-adapters": ["./packages/lsp-adapters/src/index.ts"],
+      "@nextflow-ide/runtime-adapters": ["./packages/runtime-adapters/src/index.ts"],
+      "@nextflow-ide/state-adapters": ["./packages/state-adapters/src/index.ts"],
+      "@nextflow-ide/test-utils": ["./packages/test-utils/src/index.ts"],
+      "@nextflow-ide/ui-contracts": ["./packages/ui-contracts/src/index.ts"],
+      "@nextflow-ide/vscode-extension": ["./packages/vscode-extension/src/index.ts"],
+      "@nextflow-ide/workspace-adapters": ["./packages/workspace-adapters/src/index.ts"]
+    },
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",

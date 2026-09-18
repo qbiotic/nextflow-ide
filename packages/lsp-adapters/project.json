@@ -1,0 +1,9 @@
+{
+  "name": "lsp-adapters",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/lsp-adapters/src",
+  "projectType": "library",
+  "tags": ["scope:adapters", "type:lsp"],
+  "// targets": "to see all targets run: nx show project lsp-adapters --web",
+  "targets": {}
+}

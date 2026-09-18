@@ -2,5 +2,33 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./packages/domain"
+    },
+    {
+      "path": "./packages/application"
+    },
+    {
+      "path": "./packages/runtime-adapters"
+    },
+    {
+      "path": "./packages/workspace-adapters"
+    },
+    {
+      "path": "./packages/state-adapters"
+    },
+    {
+      "path": "./packages/lsp-adapters"
+    },
+    {
+      "path": "./packages/ui-contracts"
+    },
+    {
+      "path": "./packages/test-utils"
+    },
+    {
+      "path": "./packages/vscode-extension"
+    }
+  ]
 }

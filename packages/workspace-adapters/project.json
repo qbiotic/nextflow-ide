@@ -1,0 +1,9 @@
+{
+  "name": "workspace-adapters",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/workspace-adapters/src",
+  "projectType": "library",
+  "tags": ["scope:adapters", "type:workspace"],
+  "// targets": "to see all targets run: nx show project workspace-adapters --web",
+  "targets": {}
+}

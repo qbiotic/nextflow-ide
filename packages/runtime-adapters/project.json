@@ -1,0 +1,9 @@
+{
+  "name": "runtime-adapters",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/runtime-adapters/src",
+  "projectType": "library",
+  "tags": ["scope:adapters", "type:runtime"],
+  "// targets": "to see all targets run: nx show project runtime-adapters --web",
+  "targets": {}
+}
