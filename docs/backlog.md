@@ -27,7 +27,7 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 **Epic 1 - Extension Skeleton and Activation**
 6. P0 | DONE | Tech: Create extension entrypoint module boundaries (activation, command registration, service container).
 7. P0 | DONE | Tech: Scaffold Nx packages for domain, application, adapters, UI contracts, test utilities, and the VS Code extension.
-8. P0 | TODO | Feature: Implement Nextflow workspace detection for single-root and multi-root.
+8. P0 | IN PROGRESS | Feature: Implement Nextflow workspace detection for single-root and multi-root.
 9. P0 | TODO | Feature: Add activation events scoped to Nextflow projects.
 10. P1 | TODO | Test: Add detection tests for representative project layouts.
 
@@ -48,7 +48,7 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 
 **Epic 4 - MVP User Workflow (Edit -> Run -> Logs -> Resume)**
 20. P0 | TODO | Feature: Add Run command from command palette with basic launch profile input.
-21. P0 | TODO | Feature: Launch run and register it in state immediately.
+21. P0 | IN PROGRESS | Feature: Launch run and register it in state immediately through the application use case.
 22. P0 | TODO | Feature: Stream logs in dedicated view with clear progress and completion status.
 23. P0 | TODO | Feature: Add Resume command for failed/resumable runs.
 24. P0 | TODO | UX: Define and implement empty/loading/error states across core views.
