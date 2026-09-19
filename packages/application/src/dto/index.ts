@@ -53,6 +53,14 @@ export interface GetRunHistoryResult {
   runs: readonly Run[];
 }
 
+export interface GetRunDetailsRequest {
+  runId: string;
+}
+
+export interface GetRunDetailsResult {
+  run: Run;
+}
+
 export interface ListArtifactsRequest {
   runId: string;
 }

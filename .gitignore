@@ -28,6 +28,10 @@ node_modules
 /.sass-cache
 /connect.lock
 /coverage
+/.vscode-test
+**/.nextflow/
+**/work/
+*.log
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log

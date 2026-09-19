@@ -1,5 +1,6 @@
 import type { Run } from '@nextflow-ide/domain';
 import type { StoredRunEnvelope } from '../vscode-memento/index.js';
+import { migratePersistence } from '../migrations/index.js';
 
 export interface SerializedRunRecord {
   runId: string;
@@ -14,11 +15,12 @@ export function serializeRuns(runs: readonly Run[]): StoredRunEnvelope {
 }
 
 export function deserializeRuns(value: unknown): readonly Run[] {
-  if (!isStoredRunEnvelope(value)) {
+  const migrated = migratePersistence(value);
+  if (!isStoredRunEnvelope(migrated)) {
     return [];
   }
 
-  return value.payload.runs;
+  return migrated.payload.runs;
 }
 
 function isStoredRunEnvelope(value: unknown): value is StoredRunEnvelope {

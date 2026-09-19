@@ -4,6 +4,21 @@
   "include": [],
   "references": [
     {
+      "path": "../application"
+    },
+    {
+      "path": "../domain"
+    },
+    {
+      "path": "../runtime-adapters"
+    },
+    {
+      "path": "../state-adapters"
+    },
+    {
+      "path": "../workspace-adapters"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]

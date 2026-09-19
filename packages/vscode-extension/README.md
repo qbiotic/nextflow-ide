@@ -11,6 +11,8 @@ This package is the outer composition root and inbound adapter for the Nextflow 
 - Instantiate concrete adapters and application use cases.
 - Translate VS Code events into typed application requests.
 
+The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, and `nextflowIde.showRunDetails`, plus a `Nextflow Runs` Explorer view. Selecting a run opens a read-only details webview. Runtime status events are visible in `Nextflow IDE`, while stdout/stderr are visible in `Nextflow Logs`.
+
 ## Composition Root
 
 ```mermaid
@@ -30,4 +32,8 @@ This is the only package allowed to know how concrete adapters are assembled. Bu
 
 ## Testing
 
-Activation and command tests use VS Code test doubles. Full extension scenarios use `@vscode/test-electron` once the extension manifest and commands are complete.
+The extension package typechecks against the VS Code API. Full activation scenarios still require `@vscode/test-electron`.
+
+## Manual Smoke Test
+
+Use the `Run Nextflow IDE Extension` launch configuration from `.vscode/launch.json`. It builds the extension, opens an Extension Development Host against `examples/minimal-pipeline`, and exposes the Run command and Runs view. The fixture has been verified with Nextflow 26.04.6 outside the Extension Development Host.

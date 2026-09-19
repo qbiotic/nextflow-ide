@@ -7,7 +7,12 @@ import type {
 import { describe, expect, it } from 'vitest';
 import type { PreparedRunCommand } from '../src/dto/index.js';
 import { DetectWorkspaceService } from '../src/use-cases/detect-workspace.js';
+import { ResumeRunService } from '../src/use-cases/resume-run.js';
 import { RunPipelineService } from '../src/use-cases/run-pipeline.js';
+import { StopRunService } from '../src/use-cases/stop-run.js';
+import { GetRunHistoryService } from '../src/use-cases/get-run-history.js';
+import { GetRunDetailsService } from '../src/use-cases/get-run-details.js';
+import { ListArtifactsService } from '../src/use-cases/list-artifacts.js';
 import type {
   Clock,
   EventPublisher,
@@ -195,3 +200,141 @@ describe('RunPipelineService', () => {
     expect(repository.saved).toHaveLength(0);
   });
 });
+
+describe('ResumeRunService', () => {
+  it('resumes a failed run and publishes a new started event', async () => {
+    const repository = new RecordingRepository();
+    const failedRun: Run = {
+      id: 'run-001',
+      configuration,
+      status: 'failed',
+      failure: { message: 'process failed', recoverable: true },
+      artifacts: [],
+      timestamps: {
+        createdAt: '2026-09-18T23:00:00.000Z',
+        updatedAt: '2026-09-18T23:00:02.000Z'
+      }
+    };
+    repository.saved.push(failedRun);
+    const publisher = new RecordingEventPublisher();
+    const service = new ResumeRunService({
+      clock: new FixedClock(),
+      eventPublisher: publisher,
+      runRepository: repository,
+      runtimeCommandFactory: new RecordingRuntimeCommandFactory(),
+      runtimeGateway: new RecordingRuntimeGateway()
+    });
+
+    const result = await service.execute({ runId: failedRun.id, initiatedBy: 'command-palette' });
+
+    expect(result.run).toMatchObject({ id: 'run-001', status: 'running', failure: undefined });
+    expect(repository.updated[0]?.status).toBe('running');
+    expect(publisher.events[0]).toMatchObject({ kind: 'started', runId: 'run-001' });
+  });
+
+  it('rejects a run that is not resumable', async () => {
+    const run = { ...createRunForTest(), status: 'succeeded' as const };
+    const repository = new RecordingRepository();
+    repository.saved.push(run);
+    const service = new ResumeRunService({
+      clock: new FixedClock(),
+      eventPublisher: new RecordingEventPublisher(),
+      runRepository: repository,
+      runtimeCommandFactory: new RecordingRuntimeCommandFactory(),
+      runtimeGateway: new RecordingRuntimeGateway()
+    });
+
+    await expect(service.execute({ runId: run.id, initiatedBy: 'command-palette' })).rejects.toThrow(
+      'not resumable'
+    );
+  });
+});
+
+describe('StopRunService', () => {
+  it('stops a running run and persists canceled status', async () => {
+    const run = { ...createRunForTest(), status: 'running' as const };
+    const repository = new RecordingRepository();
+    repository.saved.push(run);
+    const publisher = new RecordingEventPublisher();
+    const service = new StopRunService({
+      clock: new FixedClock(),
+      eventPublisher: publisher,
+      runRepository: repository,
+      runtimeGateway: new RecordingRuntimeGateway()
+    });
+
+    const result = await service.execute({ runId: run.id });
+
+    expect(result.run.status).toBe('canceled');
+    expect(repository.updated[0]?.status).toBe('canceled');
+    expect(publisher.events[0]).toMatchObject({ kind: 'status-changed', status: 'canceled' });
+  });
+});
+
+describe('GetRunHistoryService', () => {
+  it('returns runs sorted by most recently updated', async () => {
+    const older = createRunForTest();
+    const newer = {
+      ...createRunForTest(),
+      id: 'run-002',
+      timestamps: {
+        ...createRunForTest().timestamps,
+        updatedAt: '2026-09-19T00:00:00.000Z'
+      }
+    };
+    const repository = new RecordingRepository();
+    repository.saved.push(older, newer);
+
+    const result = await new GetRunHistoryService(repository).execute({
+      workspaceRoot: configuration.workspaceRoot
+    });
+
+    expect(result.runs.map((run) => run.id)).toEqual(['run-002', 'run-001']);
+  });
+});
+
+describe('GetRunDetailsService', () => {
+  it('returns a run by id', async () => {
+    const repository = new RecordingRepository();
+    const run = createRunForTest();
+    repository.saved.push(run);
+
+    await expect(new GetRunDetailsService(repository).execute({ runId: run.id })).resolves.toEqual({
+      run
+    });
+  });
+
+  it('rejects an unknown run', async () => {
+    await expect(
+      new GetRunDetailsService(new RecordingRepository()).execute({ runId: 'missing' })
+    ).rejects.toThrow('Run missing was not found.');
+  });
+});
+
+describe('ListArtifactsService', () => {
+  it('returns normalized artifact records for a run', async () => {
+    const repository = new RecordingRepository();
+    const run = createRunForTest();
+    repository.saved.push(run);
+    const artifacts = [{ kind: 'report' as const, available: true, path: '/workspace/report.html' }];
+
+    await expect(
+      new ListArtifactsService(repository, {
+        listForRun: async () => artifacts
+      }).execute({ runId: run.id })
+    ).resolves.toEqual({ run, artifacts });
+  });
+});
+
+function createRunForTest(): Run {
+  return {
+    id: 'run-001',
+    configuration,
+    status: 'queued',
+    artifacts: [],
+    timestamps: {
+      createdAt: '2026-09-18T23:00:00.000Z',
+      updatedAt: '2026-09-18T23:00:00.000Z'
+    }
+  };
+}

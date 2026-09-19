@@ -3,5 +3,6 @@
         "mv": true,
         "true": true,
         "printf": true
-    }
+    },
+    "nextflow.telemetry.enabled": true
 }

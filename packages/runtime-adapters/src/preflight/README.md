@@ -6,6 +6,8 @@ Checks include the Nextflow executable for local mode and Docker availability fo
 
 `NextflowExecutablePreflight` invokes `nextflow -version` and returns a boolean result. Docker preflight remains to be implemented with the Docker strategy.
 
+`DockerExecutablePreflight` invokes `docker info` and returns a boolean result with an actionable failure message at runtime.
+
 ```mermaid
 flowchart LR
   C[RunConfiguration] --> P[Preflight]

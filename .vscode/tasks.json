@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Nextflow IDE Extension",
+      "type": "shell",
+      "command": "pnpm nx run vscode-extension:build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": "$tsc"
+    }
+  ]
+}
