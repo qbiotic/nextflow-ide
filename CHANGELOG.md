@@ -34,6 +34,7 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Added quickstart, compatibility matrix, beta checklist, and privacy/telemetry defaults.
 - Added the MVP PRD, official-extension coexistence contract, and NFR baseline.
 - Added multi-root workspace selection and optional profile/params-file input to `Run Pipeline`.
+- Added `nextflowIde.selectWorkspaceRoot` and independent root selection for the Runs view.
 - Completed persistence migration boundary and view-model coverage status in the backlog.
 - Synchronized the implementation plan and audit with the completed MVP surfaces.
 - Updated application and extension view READMEs, backlog, and technical audit.

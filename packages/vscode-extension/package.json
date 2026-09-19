@@ -15,6 +15,7 @@
     "onCommand:nextflowIde.stopRun"
     ,"onCommand:nextflowIde.showRunDetails"
     ,"onCommand:nextflowIde.openArtifact"
+    ,"onCommand:nextflowIde.selectWorkspaceRoot"
     ,"onView:nextflowIde.runs"
   ],
   "contributes": {
@@ -38,6 +39,10 @@
       {
         "command": "nextflowIde.openArtifact",
         "title": "Nextflow: Open Artifact"
+      },
+      {
+        "command": "nextflowIde.selectWorkspaceRoot",
+        "title": "Nextflow: Select Workspace Root"
       }
     ],
     "views": {
