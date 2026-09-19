@@ -16,7 +16,7 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 
 **Testing and Documentation Standards**
 - P0 | DONE | Test: Select Vitest for unit and architecture tests, with Nx `test` targets.
-- P0 | IN PROGRESS | Docs: Add a README to every package and architectural source section, including Mermaid diagrams and testing guidance.
+- P0 | DONE | Docs: Add a README to every package and architectural source section, including Mermaid diagrams and testing guidance.
 
 **Architecture constraint - Hexagonal Design**
 - P0 | DONE | Tech: Define domain model and inbound/outbound port contracts before implementing adapters.
