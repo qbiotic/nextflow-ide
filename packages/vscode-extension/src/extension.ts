@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext): void {
     logs,
     vscode.window.registerTreeDataProvider('nextflowIde.runs', runsProvider),
     vscode.commands.registerCommand(RUN_PIPELINE_COMMAND, async () => {
-      const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+      const workspaceFolder = await selectWorkspaceFolder();
       if (!workspaceFolder) {
         void vscode.window.showWarningMessage('Open a workspace containing a Nextflow pipeline first.');
         return;
@@ -46,7 +46,8 @@ export function activate(context: vscode.ExtensionContext): void {
             workspaceRoot: project.rootPath,
             entrypointPath: project.entrypointPath,
             runtimeMode: 'local',
-            profileNames: project.profileNames,
+            profileNames: await requestProfiles(project.profileNames),
+            paramsFilePath: await requestParamsFile(),
             workingDirectory: project.rootPath,
             resumeEnabled: false,
             args: [],
@@ -140,6 +141,38 @@ export function activate(context: vscode.ExtensionContext): void {
       }
     })
   );
+}
+
+async function selectWorkspaceFolder(): Promise<vscode.WorkspaceFolder | undefined> {
+  const folders = vscode.workspace.workspaceFolders ?? [];
+  if (folders.length <= 1) {
+    return folders[0];
+  }
+
+  const selected = await vscode.window.showQuickPick(
+    folders.map((folder) => ({ label: folder.name, description: folder.uri.fsPath, folder })),
+    { placeHolder: 'Select the Nextflow workspace root' }
+  );
+  return selected?.folder;
+}
+
+async function requestProfiles(defaultProfiles: readonly string[]): Promise<readonly string[]> {
+  const value = await vscode.window.showInputBox({
+    prompt: 'Nextflow profiles (comma-separated, optional)',
+    value: defaultProfiles.join(',')
+  });
+  return (value ?? defaultProfiles.join(','))
+    .split(',')
+    .map((profile) => profile.trim())
+    .filter(Boolean);
+}
+
+async function requestParamsFile(): Promise<string | undefined> {
+  const value = await vscode.window.showInputBox({
+    prompt: 'Params file path (optional)',
+    placeHolder: '/path/to/params.json'
+  });
+  return value?.trim() || undefined;
 }
 
 function renderRunDetails(

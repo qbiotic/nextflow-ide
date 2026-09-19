@@ -4,6 +4,14 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 
 ## [Unreleased] 2026-09-??
 
+### feature/multi-root-ui-params
+
+- Added multi-root workspace selection to the Run Pipeline command.
+- Added optional comma-separated profile input and params-file input.
+- Added a framework-free run-list view model with sorting/status tests.
+- Removed the duplicate unused e2e suite entrypoint.
+- Updated extension READMEs, implementation plan, backlog, and changelog state.
+
 ### feature/run-pipelines (continued)
 
 - Implemented `GetRunHistoryService` with workspace filtering and newest-first sorting.
@@ -25,6 +33,8 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Added the real `@vscode/test-electron` smoke harness and verified it against the minimal fixture.
 - Added quickstart, compatibility matrix, beta checklist, and privacy/telemetry defaults.
 - Added the MVP PRD, official-extension coexistence contract, and NFR baseline.
+- Added multi-root workspace selection and optional profile/params-file input to `Run Pipeline`.
+- Completed persistence migration boundary and view-model coverage status in the backlog.
 - Updated application and extension view READMEs, backlog, and technical audit.
 
 ### feature/run-pipelines

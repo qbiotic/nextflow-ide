@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import type { GetRunHistoryUseCase } from '@nextflow-ide/application';
 import type { Run } from '@nextflow-ide/domain';
+import { toRunListItems } from './run-list-model.js';
 
 export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem | RunsMessageItem> {
   private readonly changeEmitter = new vscode.EventEmitter<RunTreeItem | RunsMessageItem | undefined | void>();
@@ -28,7 +29,7 @@ export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem
     try {
       const result = await this.getRunHistory.execute({ workspaceRoot });
       return result.runs.length > 0
-        ? result.runs.map((run) => new RunTreeItem(run))
+        ? toRunListItems(result.runs).map(({ id }) => new RunTreeItem(result.runs.find((run) => run.id === id)!))
         : [new RunsMessageItem('No runs yet.')];
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unable to load runs.';

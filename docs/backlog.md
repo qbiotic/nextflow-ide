@@ -12,7 +12,7 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 2. P0 | DONE | Tech: Define official-extension coexistence contract (activation, command namespace, fallback behavior).
 3. P0 | DONE | Docs: Define NFR baseline (startup latency target, run launch responsiveness, supported OS matrix).
 4. P1 | DONE | Docs: Define telemetry and privacy defaults for beta.
-5. P0 | IN PROGRESS | Docs: Keep README, package READMEs, backlog, implementation plan, technical audit, and pending decisions synchronized with each implementation change.
+5. P0 | DONE | Docs: Keep README, package READMEs, backlog, implementation plan, technical audit, and pending decisions synchronized with each implementation change.
 
 **Testing and Documentation Standards**
 - P0 | DONE | Test: Select Vitest for unit and architecture tests, with Nx `test` targets.
@@ -43,7 +43,7 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 15. P0 | DONE | Tech: Define run lifecycle states (queued/running/succeeded/failed/canceled/resumable).
 16. P0 | DONE | Tech: Design run metadata schema (id, command, params snapshot, timestamps, workspace context).
 17. P0 | DONE | Feature: Persist run records in workspace/user state with version tag.
-18. P1 | IN PROGRESS | Tech: Add migration mechanism for persisted schema versions.
+18. P1 | DONE | Tech: Add migration mechanism for persisted schema versions.
 19. P1 | DONE | Test: Add state-transition tests and persistence compatibility tests.
 
 **Epic 4 - MVP User Workflow (Edit -> Run -> Logs -> Resume)**
@@ -58,7 +58,7 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 26. P0 | DONE | Feature: Implement Runs list view (recent runs with status badges).
 27. P0 | DONE | Feature: Implement Run details view (config snapshot, timestamps, execution mode).
 28. P1 | DONE | UX: Add quick actions (open logs, resume, open artifacts).
-29. P1 | TODO | Test: Add view-model tests for sorting/filtering/status rendering.
+29. P1 | DONE | Test: Add view-model tests for sorting/filtering/status rendering.
 
 **Epic 6 - Artifact Baseline**
 30. P0 | DONE | Feature: Detect and expose report/trace/timeline artifacts when available.

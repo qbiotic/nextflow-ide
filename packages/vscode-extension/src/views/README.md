@@ -10,6 +10,12 @@ Runtime stdout and stderr are published to the dedicated `Nextflow Logs` output 
 
 The Runs view renders explicit empty and error items instead of failing silently when no workspace, no runs, or a repository error is present.
 
+`run-list-model.ts` is framework-free and tested independently for newest-first sorting and status presentation.
+
+The Run command selects a workspace root when multiple folders are open, while the Runs view remains scoped to the first root until a dedicated root selector is added.
+
+`run-list-model.ts` is framework-free and tested independently for newest-first sorting and status presentation.
+
 ```mermaid
 flowchart LR
   U[Application event] --> P[View projection]
