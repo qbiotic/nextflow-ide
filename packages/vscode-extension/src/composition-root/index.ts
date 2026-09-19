@@ -1,20 +1,23 @@
 import type * as vscode from 'vscode';
-import { GetRunHistoryService, ResumeRunService, RunPipelineService, StopRunService } from '@nextflow-ide/application';
+import { GetRunDetailsService, GetRunHistoryService, ListArtifactsService, ResumeRunService, RunPipelineService, StopRunService } from '@nextflow-ide/application';
 import type { ExecutionEvent } from '@nextflow-ide/domain';
 import { NextflowCommandBuilder, LocalNextflowRuntime, NextflowExecutablePreflight, NodeProcessLauncher } from '@nextflow-ide/runtime-adapters';
 import { MementoRunRepository } from '@nextflow-ide/state-adapters';
-import { NodeWorkspaceFileSystem, NextflowWorkspaceDetector } from '@nextflow-ide/workspace-adapters';
+import { NodeWorkspaceFileSystem, NextflowWorkspaceDetector, WorkspaceArtifactGateway } from '@nextflow-ide/workspace-adapters';
 
 export interface ExtensionCompositionRoot {
   runPipeline: RunPipelineService;
   resumeRun: ResumeRunService;
   stopRun: StopRunService;
   getRunHistory: GetRunHistoryService;
+  getRunDetails: GetRunDetailsService;
+  listArtifacts: ListArtifactsService;
 }
 
 export function createExtensionCompositionRoot(
   context: vscode.ExtensionContext,
-  output: vscode.OutputChannel
+  output: vscode.OutputChannel,
+  logs: vscode.OutputChannel
 ): ExtensionCompositionRoot {
   const stateStore = {
     read: async <T>(key: string): Promise<T | undefined> => context.workspaceState.get<T>(key),
@@ -27,6 +30,9 @@ export function createExtensionCompositionRoot(
       const status = 'status' in event ? ` ${event.status}` : '';
       const message = 'message' in event ? ` ${event.message}` : '';
       output.appendLine(`[${event.kind}] ${event.runId}${status}${message}`);
+      if (event.kind === 'log') {
+        logs.appendLine(`[${event.stream}] ${event.message}`);
+      }
     }
   };
   const clock = { now: (): string => new Date().toISOString() };
@@ -39,6 +45,7 @@ export function createExtensionCompositionRoot(
     preflight: new NextflowExecutablePreflight('nextflow')
   });
   const runRepository = new MementoRunRepository(stateStore);
+  const workspaceFileSystem = new NodeWorkspaceFileSystem();
   const sharedRuntimeDependencies = {
     eventPublisher,
     runtimeCommandFactory: commandBuilder,
@@ -63,7 +70,12 @@ export function createExtensionCompositionRoot(
       runRepository,
       runtimeGateway: runtime
     }),
-    getRunHistory: new GetRunHistoryService(runRepository)
+    getRunHistory: new GetRunHistoryService(runRepository),
+    getRunDetails: new GetRunDetailsService(runRepository),
+    listArtifacts: new ListArtifactsService(
+      runRepository,
+      new WorkspaceArtifactGateway(workspaceFileSystem)
+    )
   };
 }
 

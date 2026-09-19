@@ -3,6 +3,8 @@ import type {
   DetectWorkspaceResult,
   GetRunHistoryRequest,
   GetRunHistoryResult,
+  GetRunDetailsRequest,
+  GetRunDetailsResult,
   ListArtifactsRequest,
   ListArtifactsResult,
   ResumeRunRequest,
@@ -31,6 +33,10 @@ export interface DetectWorkspaceUseCase {
 
 export interface GetRunHistoryUseCase {
   execute(request: GetRunHistoryRequest): Promise<GetRunHistoryResult>;
+}
+
+export interface GetRunDetailsUseCase {
+  execute(request: GetRunDetailsRequest): Promise<GetRunDetailsResult>;
 }
 
 export interface ListArtifactsUseCase {

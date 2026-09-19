@@ -10,3 +10,5 @@ flowchart LR
 ```
 
 The adapter reports availability without moving artifact ownership into the filesystem layer. Paths must be normalized relative to the run context where possible.
+
+`WorkspaceArtifactGateway` checks `report.html`, `trace.txt`, and `timeline.html` under `outputDirectory`, falling back to the workspace root. Missing artifacts are returned explicitly with `available: false`.

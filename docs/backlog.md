@@ -49,22 +49,22 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 **Epic 4 - MVP User Workflow (Edit -> Run -> Logs -> Resume)**
 20. P0 | DONE | Feature: Add Run command from command palette with basic local launch input.
 21. P0 | DONE | Feature: Launch run and register it in state immediately through the application use case.
-22. P0 | TODO | Feature: Stream logs in dedicated view with clear progress and completion status.
+22. P0 | DONE | Feature: Stream logs in dedicated output view with clear progress and completion status.
 23. P0 | DONE | Feature: Add Resume command for failed/resumable runs.
 24. P0 | TODO | UX: Define and implement empty/loading/error states across core views.
 25. P1 | TODO | UX: Improve actionable errors (missing binary, invalid params, docker not running).
 
 **Epic 5 - Runs List and Detail Surfaces**
 26. P0 | DONE | Feature: Implement Runs list view (recent runs with status badges).
-27. P0 | TODO | Feature: Implement Run details view (config snapshot, timestamps, execution mode).
+27. P0 | DONE | Feature: Implement Run details view (config snapshot, timestamps, execution mode).
 28. P1 | TODO | UX: Add quick actions (open logs, resume, open artifacts).
 29. P1 | TODO | Test: Add view-model tests for sorting/filtering/status rendering.
 
 **Epic 6 - Artifact Baseline**
-30. P0 | TODO | Feature: Detect and expose report/trace/timeline artifacts when available.
-31. P0 | TODO | Tech: Normalize artifact paths per run to avoid brittle lookups.
-32. P1 | TODO | UX: Add artifact status indicators (available/missing/failed to generate).
-33. P1 | TODO | Test: Add artifact discovery tests for different pipeline outputs.
+30. P0 | DONE | Feature: Detect and expose report/trace/timeline artifacts when available.
+31. P0 | DONE | Tech: Normalize artifact paths per run to avoid brittle lookups.
+32. P1 | DONE | UX: Add artifact status indicators (available/missing/failed to generate).
+33. P1 | DONE | Test: Add artifact discovery tests for different pipeline outputs.
 
 **Epic 7 - Quality, Packaging, and Beta Readiness**
 39. P0 | DONE | Tech: Add Extension Development Host launch configuration and minimal Nextflow smoke fixture.

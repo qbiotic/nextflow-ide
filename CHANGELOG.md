@@ -12,6 +12,12 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Added `.vscode/launch.json` and `.vscode/tasks.json` for Extension Development Host smoke testing.
 - Added `examples/minimal-pipeline` as a reproducible local Nextflow fixture.
 - Verified the fixture runs successfully with Nextflow 26.04.6 using a temporary work directory.
+- Implemented `GetRunDetailsService` and a read-only run details webview.
+- Added the `nextflowIde.showRunDetails` command to run tree items.
+- Added the dedicated `Nextflow Logs` output channel for stdout and stderr events.
+- Implemented `ListArtifactsService` and `WorkspaceArtifactGateway` for report, trace, and timeline discovery.
+- Added normalized artifact availability and paths to run details.
+- Added 2 artifact gateway tests and expanded application coverage to 11 tests.
 - Updated application and extension view READMEs, backlog, and technical audit.
 
 ### feature/run-pipelines

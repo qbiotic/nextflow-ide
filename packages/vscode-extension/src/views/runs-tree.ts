@@ -36,5 +36,10 @@ export class RunTreeItem extends vscode.TreeItem {
     this.description = run.status;
     this.tooltip = run.commandLine ?? run.configuration.entrypointPath;
     this.contextValue = `nextflowRun.${run.status}`;
+    this.command = {
+      command: 'nextflowIde.showRunDetails',
+      title: 'Show Run Details',
+      arguments: [run.id]
+    };
   }
 }

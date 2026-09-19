@@ -11,6 +11,8 @@ import { ResumeRunService } from '../src/use-cases/resume-run.js';
 import { RunPipelineService } from '../src/use-cases/run-pipeline.js';
 import { StopRunService } from '../src/use-cases/stop-run.js';
 import { GetRunHistoryService } from '../src/use-cases/get-run-history.js';
+import { GetRunDetailsService } from '../src/use-cases/get-run-details.js';
+import { ListArtifactsService } from '../src/use-cases/list-artifacts.js';
 import type {
   Clock,
   EventPublisher,
@@ -288,6 +290,39 @@ describe('GetRunHistoryService', () => {
     });
 
     expect(result.runs.map((run) => run.id)).toEqual(['run-002', 'run-001']);
+  });
+});
+
+describe('GetRunDetailsService', () => {
+  it('returns a run by id', async () => {
+    const repository = new RecordingRepository();
+    const run = createRunForTest();
+    repository.saved.push(run);
+
+    await expect(new GetRunDetailsService(repository).execute({ runId: run.id })).resolves.toEqual({
+      run
+    });
+  });
+
+  it('rejects an unknown run', async () => {
+    await expect(
+      new GetRunDetailsService(new RecordingRepository()).execute({ runId: 'missing' })
+    ).rejects.toThrow('Run missing was not found.');
+  });
+});
+
+describe('ListArtifactsService', () => {
+  it('returns normalized artifact records for a run', async () => {
+    const repository = new RecordingRepository();
+    const run = createRunForTest();
+    repository.saved.push(run);
+    const artifacts = [{ kind: 'report' as const, available: true, path: '/workspace/report.html' }];
+
+    await expect(
+      new ListArtifactsService(repository, {
+        listForRun: async () => artifacts
+      }).execute({ runId: run.id })
+    ).resolves.toEqual({ run, artifacts });
   });
 });
 

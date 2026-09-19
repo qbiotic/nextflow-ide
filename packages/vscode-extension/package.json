@@ -13,6 +13,7 @@
     "onCommand:nextflowIde.runPipeline",
     "onCommand:nextflowIde.resumeRun",
     "onCommand:nextflowIde.stopRun"
+    ,"onCommand:nextflowIde.showRunDetails"
     ,"onView:nextflowIde.runs"
   ],
   "contributes": {
@@ -28,6 +29,10 @@
       {
         "command": "nextflowIde.stopRun",
         "title": "Nextflow: Stop Run"
+      },
+      {
+        "command": "nextflowIde.showRunDetails",
+        "title": "Nextflow: Show Run Details"
       }
     ],
     "views": {

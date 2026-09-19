@@ -15,8 +15,8 @@ Build a VS Code extension focused on local Nextflow operations for a clearly def
 4. Phase 1 - Runtime Adapter (parallel with 5, depends on 2): design a runtime abstraction and implement local macOS/Linux execution first, plus Docker mode support with deterministic command construction. Local process execution is implemented; Docker process wiring remains.
 5. Phase 1 - State Model (parallel with 4, depends on 2): define run entity schema, persistence boundaries (workspace vs user), run lifecycle states, and retention policy inside the domain/application core.
 6. Phase 2 - Core MVP Workflow (depends on 3,4,5): deliver the E2E flow Edit -> Run -> Logs -> Resume, including failure states and actionable error messages. Local Run and initial log output are implemented; Resume and dedicated views remain.
-7. Phase 2 - Minimal UX Surfaces (parallel within phase 2, depends on 6): add command palette entry points, run list, run details, and log stream view with clear loading/empty/error states.
-8. Phase 2 - Artifacts Baseline (depends on 6): provide minimal artifacts access (report/trace/timeline if present) and resilient file discovery per run.
+7. Phase 2 - Minimal UX Surfaces (parallel within phase 2, depends on 6): add command palette entry points, run list, run details, and log stream view with clear loading/empty/error states. Run list, details, and dedicated logs are implemented; richer states remain.
+8. Phase 2 - Artifacts Baseline (depends on 6): provide minimal artifacts access (report/trace/timeline if present) and resilient file discovery per run. Discovery, normalization, and status display are implemented; opening actions remain.
 9. Phase 3 - Quality Gate (depends on 7,8): add tests for command-building, state transitions, persistence migration safety, and integration smoke tests.
 10. Phase 3 - Release Readiness (depends on 9): prepare beta checklist, telemetry/privacy defaults, docs, and a small pilot validation loop.
 

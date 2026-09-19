@@ -12,6 +12,8 @@ This package adapts VS Code workspace and filesystem concerns to stable applicat
 - Discover and normalize report, trace, and timeline artifacts.
 - Provide the Node filesystem adapter used by the extension composition root.
 
+Artifact discovery is implemented by `WorkspaceArtifactGateway` and is exposed in the run details view as availability and normalized path metadata.
+
 ## Dependency Rules
 
 Only this adapter package knows filesystem details. Domain and application receive normalized values through ports.

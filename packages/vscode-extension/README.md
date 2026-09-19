@@ -11,7 +11,7 @@ This package is the outer composition root and inbound adapter for the Nextflow 
 - Instantiate concrete adapters and application use cases.
 - Translate VS Code events into typed application requests.
 
-The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, and `nextflowIde.stopRun`, plus a `Nextflow Runs` Explorer view. The view is backed by `GetRunHistoryService`; runtime events remain visible in the `Nextflow IDE` output channel.
+The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, and `nextflowIde.showRunDetails`, plus a `Nextflow Runs` Explorer view. Selecting a run opens a read-only details webview. Runtime status events are visible in `Nextflow IDE`, while stdout/stderr are visible in `Nextflow Logs`.
 
 ## Composition Root
 
