@@ -7,6 +7,7 @@
 - [ ] `pnpm test` succeeds.
 - [ ] `pnpm run test:e2e` succeeds on the release machine.
 - [ ] `pnpm run package:vsix` produces `dist/nextflow-ide-mvp.vsix`.
+- [ ] CI runs typecheck, unit tests, packaging, and the VS Code smoke e2e.
 - [ ] Manual local Nextflow smoke run succeeds.
 - [ ] Manual Docker smoke run succeeds.
 

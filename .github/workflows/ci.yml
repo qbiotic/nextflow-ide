@@ -22,7 +22,7 @@ jobs:
       - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          version: 11.13.0
+          version: 12.4.2
           run_install: false
 
       # This enables task distribution via Nx Cloud
@@ -40,9 +40,10 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      # Prepend any command with "nx record --" to record its logs to Nx Cloud
-      # - run: pnpm exec nx record -- echo Hello World
-      - run: pnpm exec nx run-many -t lint test build typecheck
+      - run: pnpm run typecheck
+      - run: pnpm test
+      - run: pnpm run package:vsix
+      - run: xvfb-run -a pnpm run test:e2e
       # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
       - run: pnpm exec nx fix-ci
         if: always()
