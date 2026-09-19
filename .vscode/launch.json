@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run Nextflow IDE Extension",
+      "name": "Run qbiotic-flow Extension",
       "type": "extensionHost",
       "request": "launch",
       "runtimeExecutable": "${execPath}",
@@ -13,7 +13,7 @@
       "outFiles": [
         "${workspaceFolder}/packages/vscode-extension/dist/**/*.js"
       ],
-      "preLaunchTask": "Build Nextflow IDE Extension"
+      "preLaunchTask": "Build qbiotic-flow Extension"
     }
   ]
 }

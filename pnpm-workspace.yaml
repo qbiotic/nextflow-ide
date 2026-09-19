@@ -2,4 +2,5 @@ packages:
   - "packages/*"
 autoInstallPeers: true
 allowBuilds:
+  '@vscode/vsce-sign': true
   nx: true

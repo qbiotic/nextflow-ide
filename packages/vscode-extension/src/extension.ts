@@ -14,8 +14,8 @@ import {
 import { RunsTreeDataProvider } from './views/runs-tree.js';
 
 export function activate(context: vscode.ExtensionContext): void {
-  const output = vscode.window.createOutputChannel('Nextflow IDE');
-  const logs = vscode.window.createOutputChannel('Nextflow Logs');
+  const output = vscode.window.createOutputChannel('qbiotic-flow');
+  const logs = vscode.window.createOutputChannel('qbiotic-flow Logs');
   const compositionRoot = createExtensionCompositionRoot(context, output, logs);
   let selectedWorkspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
   const runsProvider = new RunsTreeDataProvider(

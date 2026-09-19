@@ -10,4 +10,4 @@
 | Multi-root workspace | User selects the root for Run and independently selects the root used by Runs view. | Unit coverage for detector and view model |
 | Remote VS Code workspace | Not a release target for this MVP. | Explicit non-goal |
 
-The official extension is optional. No core use case imports or requires its implementation types.
+qbiotic-flow complements the official extension when installed, but no core use case imports or requires its implementation types.

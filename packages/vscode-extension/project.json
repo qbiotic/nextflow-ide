@@ -15,7 +15,7 @@
     "package": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "mkdir -p ../../dist && ../../node_modules/.bin/vsce package --no-dependencies --skip-license --allow-missing-repository --out ../../dist/nextflow-ide-mvp.vsix",
+        "command": "mkdir -p ../../dist && ../../node_modules/.bin/vsce package --no-dependencies --skip-license --allow-missing-repository --out ../../dist/qbiotic-flow.vsix",
         "cwd": "packages/vscode-extension"
       }
     }

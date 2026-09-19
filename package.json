@@ -2,6 +2,10 @@
   "name": "@nextflow-ide/source",
   "version": "0.0.0",
   "license": "MIT",
+  "author": {
+    "name": "Pablo Pimàs Verge",
+    "email": "pablo@pimas.cat"
+  },
   "scripts": {
     "build": "nx run-many -t build",
     "typecheck": "nx run-many -t typecheck",
