@@ -4,6 +4,16 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 
 ## [Unreleased] 2026-09-??
 
+### feature/command-builder
+
+- Implemented `NextflowWorkspaceDetector` with an injected filesystem port.
+- Added `NodeWorkspaceFileSystem` for production workspace discovery.
+- Detects required `main.nf`, optional `nextflow.config`, and module `.nf` files.
+- Implemented `NextflowCommandBuilder` for local and Docker execution modes.
+- Added support for profiles, params files, resume, custom arguments, working directories, environment values, and display-safe command previews.
+- Added 3 workspace detection tests and 3 command-builder tests.
+- Updated adapter READMEs, backlog, implementation plan, and technical audit.
+
 ### feature/application-use-cases
 
 - Implemented `DetectWorkspaceService` with typed positive and negative detection results.

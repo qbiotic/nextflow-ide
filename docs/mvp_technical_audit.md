@@ -19,12 +19,12 @@ What is already in place:
 What is still missing:
 
 - Remaining domain behavior and application use cases beyond `DetectWorkspace` and `RunPipeline`.
-- Real VS Code activation, commands, views, runtime adapters, and persistence implementations.
-- MVP workspace and runtime fixtures for adapter and end-to-end tests.
+- Real VS Code activation, commands, views, process runtime, and persistence implementations.
+- MVP runtime fixtures and an extension-level end-to-end harness.
 - Real extension-level end-to-end test harness using `@vscode/test-electron`.
 - Ongoing synchronization of root, package, and section documentation as implementation advances.
 
-The first application behavior slice is now implemented. The next move is to build the workspace detection adapter and deterministic command builder behind the existing ports.
+The workspace detection adapter and deterministic command builder are now implemented and tested. The next move is to implement persistence and the local process runtime behind the existing ports.
 
 ## Current State Assessment
 
@@ -540,9 +540,9 @@ Do not build these before the first smoke path exists:
 
 ## Immediate Next Actions
 
-1. Implement the workspace detection adapter and its fixture tests.
-2. Implement the deterministic local/Docker command builder.
-3. Add the remaining run lifecycle use cases on top of the existing ports.
+1. Implement versioned run persistence behind `RunRepository`.
+2. Add the remaining run lifecycle use cases on top of the existing ports.
+3. Implement the local process runtime and event translation.
 4. Add `@vscode/test-electron` when the first executable extension command exists.
 5. Update root, package, and section READMEs plus backlog, plan, and this audit in the same change set as each implementation slice.
 

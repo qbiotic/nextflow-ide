@@ -11,8 +11,8 @@ Build a VS Code extension focused on local Nextflow operations for a clearly def
 **Steps**
 1. Phase 0 - Product Lock (blocks all coding): finalize MVP scope and acceptance criteria in a one-page PRD with explicit in/out, target persona, and success metrics. Include explicit non-goals for platform/DevOps use cases. (*blocks steps 2-8*)
 2. Phase 0 - Integration Contract (depends on 1): define coexistence model with the official Nextflow extension (activation, commands, views, conflicts, fallback behavior if missing).
-3. Phase 1 - Workspace Detection & Activation (depends on 2): implement the workspace detection adapter and extension activation strategy for multi-root workspaces on top of the existing Nx scaffold and enforced dependency boundaries.
-4. Phase 1 - Runtime Adapter (parallel with 5, depends on 2): design a runtime abstraction and implement local macOS/Linux execution first, plus Docker mode support with deterministic command construction.
+3. Phase 1 - Workspace Detection & Activation (depends on 2): implement the workspace detection adapter and extension activation strategy for multi-root workspaces on top of the existing Nx scaffold and enforced dependency boundaries. Detection is implemented; activation remains.
+4. Phase 1 - Runtime Adapter (parallel with 5, depends on 2): design a runtime abstraction and implement local macOS/Linux execution first, plus Docker mode support with deterministic command construction. Command construction is implemented; process execution remains.
 5. Phase 1 - State Model (parallel with 4, depends on 2): define run entity schema, persistence boundaries (workspace vs user), run lifecycle states, and retention policy inside the domain/application core.
 6. Phase 2 - Core MVP Workflow (depends on 3,4,5): deliver the E2E flow Edit -> Run -> Logs -> Resume, including failure states and actionable error messages.
 7. Phase 2 - Minimal UX Surfaces (parallel within phase 2, depends on 6): add command palette entry points, run list, run details, and log stream view with clear loading/empty/error states.
