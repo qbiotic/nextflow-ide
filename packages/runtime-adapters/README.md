@@ -28,3 +28,5 @@ flowchart LR
 ## Testing
 
 Command construction and runtime selection are unit tested without launching processes. Process integration tests use controlled fixtures and are separate from pure command tests.
+
+`NextflowCommandBuilder` currently supports local and Docker modes, profiles, params files, resume, custom arguments, working directories, environment values, and display-safe command previews. It does not launch processes yet.

@@ -10,6 +10,7 @@ This package adapts VS Code workspace and filesystem concerns to stable applicat
 - Support single-root and multi-root workspace decisions.
 - Read workspace file metadata.
 - Discover and normalize report, trace, and timeline artifacts.
+- Provide the Node filesystem adapter used by the extension composition root.
 
 ## Dependency Rules
 
@@ -26,4 +27,4 @@ flowchart LR
 
 ## Testing
 
-Use fixture directories for representative Nextflow projects, missing files, multiple entrypoints, and artifact combinations.
+Use fixture directories for representative Nextflow projects, missing files, multiple entrypoints, and artifact combinations. The current detector requires `main.nf`, treats `nextflow.config` as optional, and defers profile parsing.

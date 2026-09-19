@@ -14,3 +14,5 @@ sequenceDiagram
 ```
 
 This adapter owns Node process details; those details must not cross into domain or application contracts.
+
+The current slice only prepares commands. Process spawning and monitoring remain the next runtime implementation step.
