@@ -12,3 +12,5 @@ flowchart TB
 ```
 
 It must not contain domain rules. Its responsibility is dependency injection and lifecycle ownership.
+
+The current root wires `RunPipelineService` to `NextflowCommandBuilder`, `LocalNextflowRuntime`, `MementoRunRepository`, `NodeWorkspaceFileSystem`, and an output-channel event publisher.

@@ -9,5 +9,21 @@
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../application/tsconfig.lib.json"
+    },
+    {
+      "path": "../domain/tsconfig.lib.json"
+    },
+    {
+      "path": "../runtime-adapters/tsconfig.lib.json"
+    },
+    {
+      "path": "../state-adapters/tsconfig.lib.json"
+    },
+    {
+      "path": "../workspace-adapters/tsconfig.lib.json"
+    }
+  ]
 }

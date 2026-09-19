@@ -17,6 +17,9 @@ importers:
       '@types/node':
         specifier: ^22.0.0
         version: 22.20.3
+      '@types/vscode':
+        specifier: ^1.104.0
+        version: 1.138.0
       nx:
         specifier: 23.2.1
         version: 23.2.1
@@ -88,6 +91,21 @@ importers:
 
   packages/vscode-extension:
     dependencies:
+      '@nextflow-ide/application':
+        specifier: workspace:*
+        version: link:../application
+      '@nextflow-ide/domain':
+        specifier: workspace:*
+        version: link:../domain
+      '@nextflow-ide/runtime-adapters':
+        specifier: workspace:*
+        version: link:../runtime-adapters
+      '@nextflow-ide/state-adapters':
+        specifier: workspace:*
+        version: link:../state-adapters
+      '@nextflow-ide/workspace-adapters':
+        specifier: workspace:*
+        version: link:../workspace-adapters
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
@@ -884,6 +902,9 @@ packages:
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
+
+  '@types/vscode@1.138.0':
+    resolution: {integrity: sha512-DhlvrucJa8n6EHst7qQcXOcjLKs/VRTQy55plLO+RN74jonYsr/t9dd66zBnAyz1tpDig0okQAxuoPHpVNje2g==}
 
   '@vitest/mocker@5.0.1':
     resolution: {integrity: sha512-6K1DoBNAPGvuOcSsGA4D6x+5zEEff/KmOOP3uetT2TrGpVfI+HRHRnJJfKi5ib/g1vx8IYHQD8s0pbJz8WQI7Q==}
@@ -2789,6 +2810,8 @@ snapshots:
       undici-types: 6.21.0
 
   '@types/parse-json@4.0.2': {}
+
+  '@types/vscode@1.138.0': {}
 
   '@vitest/mocker@5.0.1(vite@8.3.0(@types/node@22.20.3)(yaml@2.9.0))':
     dependencies:

@@ -18,13 +18,13 @@ What is already in place:
 
 What is still missing:
 
-- Remaining domain behavior and application use cases beyond `DetectWorkspace` and `RunPipeline`.
-- Real VS Code activation, commands, views, and concrete VS Code state-store wiring.
-- MVP runtime fixtures and an extension-level end-to-end harness.
+- Remaining domain behavior and application use cases beyond the implemented run, resume, stop, and workspace flows.
+- Rich VS Code views, full project-scoped activation, and end-to-end extension verification.
+- Extension-level end-to-end harness using `@vscode/test-electron`.
 - Real extension-level end-to-end test harness using `@vscode/test-electron`.
 - Ongoing synchronization of root, package, and section documentation as implementation advances.
 
-The workspace detection adapter, deterministic command builder, versioned run repository, and local process runtime are now implemented and tested. The next move is to wire persistence and runtime into the extension composition root, then add the first extension command.
+The workspace detection adapter, deterministic command builder, versioned run repository, local process runtime, Run/Resume/Stop commands, and the initial Runs tree view are now implemented and typechecked. A manual Extension Development Host configuration and minimal pipeline fixture are also available and the fixture runs successfully with Nextflow. The next move is to add extension-level tests and run details/log views.
 
 ## Current State Assessment
 

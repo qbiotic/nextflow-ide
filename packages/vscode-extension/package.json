@@ -9,7 +9,36 @@
     "vscode": "^1.104.0"
   },
   "categories": ["Other"],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:nextflowIde.runPipeline",
+    "onCommand:nextflowIde.resumeRun",
+    "onCommand:nextflowIde.stopRun"
+    ,"onView:nextflowIde.runs"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "nextflowIde.runPipeline",
+        "title": "Nextflow: Run Pipeline"
+      },
+      {
+        "command": "nextflowIde.resumeRun",
+        "title": "Nextflow: Resume Run"
+      },
+      {
+        "command": "nextflowIde.stopRun",
+        "title": "Nextflow: Stop Run"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "nextflowIde.runs",
+          "name": "Nextflow Runs"
+        }
+      ]
+    }
+  },
   "keywords": ["nextflow", "vscode", "bioinformatics"],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -24,6 +53,11 @@
     }
   },
   "dependencies": {
+    "@nextflow-ide/application": "workspace:*",
+    "@nextflow-ide/domain": "workspace:*",
+    "@nextflow-ide/runtime-adapters": "workspace:*",
+    "@nextflow-ide/state-adapters": "workspace:*",
+    "@nextflow-ide/workspace-adapters": "workspace:*",
     "tslib": "^2.3.0"
   }
 }

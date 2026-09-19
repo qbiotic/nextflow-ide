@@ -8,8 +8,9 @@ This section contains orchestration services that execute the MVP workflow using
 
 - `DetectWorkspaceService`: delegates workspace inspection and maps an absent project to a typed result reason.
 - `RunPipelineService`: prepares a command, creates and persists a queued run, starts the runtime, updates the run to `running`, and publishes the started event.
-- Resume run.
-- Stop run.
+- `ResumeRunService`: validates a failed or resumable run, prepares a resume command, starts it, persists `running`, and publishes a started event.
+- `StopRunService`: validates a cancelable run, requests runtime cancellation, persists `canceled`, and publishes a status event.
+- `GetRunHistoryService`: reads runs for a workspace and returns them sorted by last update.
 - Get run history.
 - List artifacts.
 
@@ -23,4 +24,4 @@ flowchart LR
 
 ## Current State
 
-`DetectWorkspaceService` and `RunPipelineService` are implemented and covered by application unit tests. Resume, stop, history, and artifact use cases remain contract-only.
+`DetectWorkspaceService`, `RunPipelineService`, `ResumeRunService`, `StopRunService`, and `GetRunHistoryService` are implemented and covered by application unit tests. Artifact listing remains contract-only.
