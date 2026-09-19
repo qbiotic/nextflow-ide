@@ -4,6 +4,18 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 
 ## [Unreleased] 2026-09-??
 
+### feature/deep-index
+
+- Expanded `WorkspaceProject` with all root entrypoints.
+- Added `nextflow.config` text reading and profile-name extraction.
+- Separated nested module scripts from root-level entrypoints.
+- Added entrypoint selection to the Run command.
+- Replaced free-form params-file text input with a validated VS Code JSON/YAML file picker.
+- Added `pnpm run package:vsix` and validated a 12-file `dist/nextflow-ide-mvp.vsix` artifact.
+- Updated CI to use the current pnpm version and run typecheck, tests, VSIX packaging, and headless VS Code e2e.
+- Added regression coverage for the pinned default Docker image.
+- Added project detection coverage for multiple entrypoints, profiles, and modules.
+
 ### feature/multi-root-ui-params
 
 - Added multi-root workspace selection to the Run Pipeline command.
@@ -39,6 +51,8 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Pinned the default Docker image to the published `nextflow/nextflow:26.04.6` tag after validating Docker Hub availability.
 - Fixed Docker invocation to call `nextflow` explicitly through the image entrypoint wrapper.
 - Added `workspaceContains:main.nf` project-scoped activation without requiring the official Nextflow extension.
+- Completed deep workspace indexing for root entrypoints, nested modules, and `profiles {}` names in `nextflow.config`.
+- Added entrypoint selection to the Run command.
 - Completed persistence migration boundary and view-model coverage status in the backlog.
 - Synchronized the implementation plan and audit with the completed MVP surfaces.
 - Updated application and extension view READMEs, backlog, and technical audit.

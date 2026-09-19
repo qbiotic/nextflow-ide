@@ -11,7 +11,7 @@ This package is the outer composition root and inbound adapter for the Nextflow 
 - Instantiate concrete adapters and application use cases.
 - Translate VS Code events into typed application requests.
 
-The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `Nextflow Runs` Explorer view. Run supports multi-root selection, comma-separated profiles, and an optional params file. The Runs view can switch its active root independently. Selecting a run opens a read-only details webview. Runtime status events are visible in `Nextflow IDE`, while stdout/stderr are visible in `Nextflow Logs`.
+The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `Nextflow Runs` Explorer view. Run supports multi-root selection, multiple entrypoints, discovered config profiles, comma-separated profile overrides, and an optional JSON/YAML params file selected through the VS Code file picker. The Runs view can switch its active root independently.
 
 Activation is scoped to workspaces containing `main.nf` or to one of the contributed commands/views; the official Nextflow extension is not required.
 
@@ -35,6 +35,10 @@ This is the only package allowed to know how concrete adapters are assembled. Bu
 ## Testing
 
 The extension package typechecks against the VS Code API. Full activation scenarios still require `@vscode/test-electron`.
+
+## Packaging
+
+Run `pnpm run package:vsix` from the repository root to create `dist/nextflow-ide-mvp.vsix`. The package excludes TypeScript sources, internal configuration, tests, e2e files, and local dependencies through `.vscodeignore`.
 
 ## Manual Smoke Test
 

@@ -7,11 +7,16 @@ import {
 class FakeWorkspaceFileSystem implements WorkspaceFileSystem {
   public constructor(
     private readonly files: ReadonlySet<string>,
-    private readonly matches: readonly string[] = []
+    private readonly matches: readonly string[] = [],
+    private readonly configText?: string
   ) {}
 
   public async exists(path: string): Promise<boolean> {
     return this.files.has(path);
+  }
+
+  public async readText(): Promise<string | undefined> {
+    return this.configText;
   }
 
   public async findFiles(): Promise<readonly string[]> {
@@ -34,6 +39,7 @@ describe('NextflowWorkspaceDetector', () => {
     await expect(detector.detect(rootPath)).resolves.toEqual({
       rootPath,
       entrypointPath,
+      entrypointPaths: [entrypointPath],
       configPath: `${rootPath}/nextflow.config`,
       profileNames: [],
       modulePaths: [modulePath]
@@ -56,8 +62,30 @@ describe('NextflowWorkspaceDetector', () => {
     await expect(detector.detect(rootPath)).resolves.toMatchObject({
       rootPath,
       entrypointPath,
+      entrypointPaths: [entrypointPath],
       profileNames: [],
       modulePaths: []
+    });
+  });
+
+  it('discovers root entrypoints and profiles from nextflow.config', async () => {
+    const rootPath = '/workspace/multi';
+    const mainPath = `${rootPath}/main.nf`;
+    const secondaryPath = `${rootPath}/secondary.nf`;
+    const config = `profiles {\n  standard { process.executor = 'local' }\n  docker { process.container = 'ubuntu' }\n}`;
+    const detector = new NextflowWorkspaceDetector(new FakeWorkspaceFileSystem(
+      new Set([mainPath, `${rootPath}/nextflow.config`]),
+      [mainPath, secondaryPath, `${rootPath}/modules/tool.nf`],
+      config
+    ));
+
+    await expect(detector.detect(rootPath)).resolves.toEqual({
+      rootPath,
+      entrypointPath: mainPath,
+      entrypointPaths: [mainPath, secondaryPath],
+      configPath: `${rootPath}/nextflow.config`,
+      profileNames: ['standard', 'docker'],
+      modulePaths: [`${rootPath}/modules/tool.nf`]
     });
   });
 });

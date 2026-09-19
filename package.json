@@ -6,6 +6,7 @@
     "build": "nx run-many -t build",
     "typecheck": "nx run-many -t typecheck",
     "test": "nx run-many -t test",
+    "package:vsix": "pnpm nx run vscode-extension:package",
     "test:e2e": "node packages/vscode-extension/e2e/run.mjs"
   },
   "private": true,
@@ -15,6 +16,7 @@
     "@types/node": "^22.0.0",
     "@types/vscode": "^1.104.0",
     "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.0.0",
     "nx": "23.2.1",
     "prettier": "~3.6.2",
     "tslib": "^2.3.0",

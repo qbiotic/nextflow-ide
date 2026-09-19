@@ -64,6 +64,16 @@ describe('NextflowCommandBuilder', () => {
     ]);
   });
 
+  it('uses the published pinned Docker image by default', async () => {
+    const builder = new NextflowCommandBuilder();
+    const command = await builder.prepareRunCommand({
+      ...baseConfiguration,
+      runtimeMode: 'docker'
+    });
+
+    expect(command.args).toContain('nextflow/nextflow:26.04.6');
+  });
+
   it('forces resume when preparing a resume command', async () => {
     const builder = new NextflowCommandBuilder();
     const run = {

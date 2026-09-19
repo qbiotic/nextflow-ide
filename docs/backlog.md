@@ -27,9 +27,9 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 **Epic 1 - Extension Skeleton and Activation**
 6. P0 | DONE | Tech: Create extension entrypoint module boundaries (activation, command registration, service container).
 7. P0 | DONE | Tech: Scaffold Nx packages for domain, application, adapters, UI contracts, test utilities, and the VS Code extension.
-8. P0 | DONE | Feature: Implement Nextflow workspace detection for single-root and multi-root.
+8. P0 | DONE | Feature: Implement Nextflow workspace detection for single-root and multi-root entrypoints.
 9. P0 | DONE | Feature: Add project-scoped activation for workspaces containing `main.nf` and contributed commands.
-10. P1 | DONE | Test: Add detection tests for representative project layouts.
+10. P1 | DONE | Test: Add detection tests for entrypoints, profiles, modules, and representative project layouts.
 
 **Epic 2 - Runtime Adapter (Local + Docker)**
 9. P0 | DONE | Tech: Define runtime adapter interface (prepare command, launch, monitor, stop, resume).

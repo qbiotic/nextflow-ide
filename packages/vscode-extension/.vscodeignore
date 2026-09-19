@@ -1,0 +1,10 @@
+**/*.ts
+**/*.map
+**/tests/**
+**/e2e/**
+src/**
+project.json
+tsconfig*.json
+node_modules/**
+dist/**/*.tsbuildinfo
+dist/lib/**

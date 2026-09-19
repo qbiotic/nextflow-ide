@@ -14,6 +14,8 @@ This package adapts VS Code workspace and filesystem concerns to stable applicat
 
 Artifact discovery is implemented by `WorkspaceArtifactGateway` and is exposed in the run details view as availability and normalized path metadata.
 
+Project indexing now returns root entrypoints, nested module paths, and profile names from `nextflow.config`.
+
 ## Dependency Rules
 
 Only this adapter package knows filesystem details. Domain and application receive normalized values through ports.

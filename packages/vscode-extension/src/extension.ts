@@ -53,7 +53,7 @@ export function activate(context: vscode.ExtensionContext): void {
         const result = await compositionRoot.runPipeline.execute({
           configuration: {
             workspaceRoot: project.rootPath,
-            entrypointPath: project.entrypointPath,
+            entrypointPath: await requestEntrypoint(project.entrypointPaths, project.entrypointPath),
             runtimeMode: 'local',
             profileNames: await requestProfiles(project.profileNames),
             paramsFilePath: await requestParamsFile(),
@@ -192,12 +192,27 @@ async function requestProfiles(defaultProfiles: readonly string[]): Promise<read
     .filter(Boolean);
 }
 
+async function requestEntrypoint(
+  entrypointPaths: readonly string[],
+  defaultEntrypoint: string
+): Promise<string> {
+  if (entrypointPaths.length <= 1) return defaultEntrypoint;
+  const selected = await vscode.window.showQuickPick(
+    entrypointPaths.map((path) => ({ label: path.split('/').at(-1) ?? path, description: path, path })),
+    { placeHolder: 'Select the Nextflow entrypoint' }
+  );
+  return selected?.path ?? defaultEntrypoint;
+}
+
 async function requestParamsFile(): Promise<string | undefined> {
-  const value = await vscode.window.showInputBox({
-    prompt: 'Params file path (optional)',
-    placeHolder: '/path/to/params.json'
+  const selection = await vscode.window.showOpenDialog({
+    canSelectFiles: true,
+    canSelectFolders: false,
+    canSelectMany: false,
+    openLabel: 'Use Params File',
+    filters: { 'Parameter files': ['json', 'yaml', 'yml'] }
   });
-  return value?.trim() || undefined;
+  return selection?.[0]?.fsPath;
 }
 
 function renderRunDetails(
