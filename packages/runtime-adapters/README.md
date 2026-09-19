@@ -29,6 +29,8 @@ flowchart LR
 
 Command construction and runtime selection are unit tested without launching processes. Process integration tests use controlled fixtures and are separate from pure command tests.
 
-`NextflowCommandBuilder` currently supports local and Docker modes, profiles, params files, resume, custom arguments, working directories, environment values, and display-safe command previews. It does not launch processes yet.
+`NextflowCommandBuilder` supports local and Docker modes, profiles, params files, resume, custom arguments, working directories, environment values, and display-safe command previews.
 
-`LocalNextflowRuntime` now launches local processes, streams output through `EventPublisher`, maps exit codes to run statuses, and supports cancellation. Docker process execution is not yet wired.
+`LocalNextflowRuntime` launches local processes, while `DockerNextflowRuntime` launches Docker processes through the same lifecycle contract. Both stream output through `EventPublisher`, map exit codes to run statuses, and support cancellation.
+
+`DockerNextflowRuntime` and `RuntimeRouter` now provide the same lifecycle contract for Docker mode. Runtime selection is based on `RunConfiguration.runtimeMode`.

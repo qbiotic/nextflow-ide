@@ -1,7 +1,7 @@
 import type * as vscode from 'vscode';
 import { GetRunDetailsService, GetRunHistoryService, ListArtifactsService, ResumeRunService, RunPipelineService, StopRunService } from '@nextflow-ide/application';
 import type { ExecutionEvent } from '@nextflow-ide/domain';
-import { NextflowCommandBuilder, LocalNextflowRuntime, NextflowExecutablePreflight, NodeProcessLauncher } from '@nextflow-ide/runtime-adapters';
+import { DockerExecutablePreflight, DockerNextflowRuntime, NextflowCommandBuilder, LocalNextflowRuntime, NextflowExecutablePreflight, NodeProcessLauncher, RuntimeRouter } from '@nextflow-ide/runtime-adapters';
 import { MementoRunRepository } from '@nextflow-ide/state-adapters';
 import { NodeWorkspaceFileSystem, NextflowWorkspaceDetector, WorkspaceArtifactGateway } from '@nextflow-ide/workspace-adapters';
 
@@ -38,12 +38,19 @@ export function createExtensionCompositionRoot(
   const clock = { now: (): string => new Date().toISOString() };
   const idGenerator = { next: (): string => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}` };
   const commandBuilder = new NextflowCommandBuilder();
-  const runtime = new LocalNextflowRuntime({
+  const localRuntime = new LocalNextflowRuntime({
     clock,
     eventPublisher,
     launcher: new NodeProcessLauncher(),
     preflight: new NextflowExecutablePreflight('nextflow')
   });
+  const dockerRuntime = new DockerNextflowRuntime({
+    clock,
+    eventPublisher,
+    launcher: new NodeProcessLauncher(),
+    preflight: new DockerExecutablePreflight()
+  });
+  const runtime = new RuntimeRouter(localRuntime, dockerRuntime);
   const runRepository = new MementoRunRepository(stateStore);
   const workspaceFileSystem = new NodeWorkspaceFileSystem();
   const sharedRuntimeDependencies = {

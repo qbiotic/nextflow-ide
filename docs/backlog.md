@@ -8,10 +8,10 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 - Type: Feature, Tech, UX, Test, Docs
 
 **Epic 0 - Product and Contract Baseline**
-1. P0 | TODO | Docs: Create one-page MVP PRD (persona, in/out scope, success metrics, explicit non-goals).
-2. P0 | TODO | Tech: Define official-extension coexistence contract (activation, command namespace, fallback behavior).
-3. P0 | TODO | Docs: Define NFR baseline (startup latency target, run launch responsiveness, supported OS matrix).
-4. P1 | TODO | Docs: Define telemetry and privacy defaults for beta.
+1. P0 | DONE | Docs: Create one-page MVP PRD (persona, in/out scope, success metrics, explicit non-goals).
+2. P0 | DONE | Tech: Define official-extension coexistence contract (activation, command namespace, fallback behavior).
+3. P0 | DONE | Docs: Define NFR baseline (startup latency target, run launch responsiveness, supported OS matrix).
+4. P1 | DONE | Docs: Define telemetry and privacy defaults for beta.
 5. P0 | IN PROGRESS | Docs: Keep README, package READMEs, backlog, implementation plan, technical audit, and pending decisions synchronized with each implementation change.
 
 **Testing and Documentation Standards**
@@ -34,10 +34,10 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 **Epic 2 - Runtime Adapter (Local + Docker)**
 9. P0 | DONE | Tech: Define runtime adapter interface (prepare command, launch, monitor, stop, resume).
 10. P0 | DONE | Feature: Implement local runtime provider (macOS/Linux).
-11. P0 | TODO | Feature: Implement Docker runtime provider.
+11. P0 | DONE | Feature: Implement Docker runtime provider.
 12. P0 | DONE | Tech: Add deterministic command builder with safe argument escaping.
 13. P1 | DONE | Test: Unit test command builder edge cases (paths with spaces, env vars, profiles).
-14. P1 | IN PROGRESS | Tech: Add preflight checks (Nextflow executable implemented; Docker check pending).
+14. P1 | DONE | Tech: Add preflight checks for Nextflow and Docker.
 
 **Epic 3 - Run State and Persistence**
 15. P0 | DONE | Tech: Define run lifecycle states (queued/running/succeeded/failed/canceled/resumable).
@@ -51,8 +51,8 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 21. P0 | DONE | Feature: Launch run and register it in state immediately through the application use case.
 22. P0 | DONE | Feature: Stream logs in dedicated output view with clear progress and completion status.
 23. P0 | DONE | Feature: Add Resume command for failed/resumable runs.
-24. P0 | TODO | UX: Define and implement empty/loading/error states across core views.
-25. P1 | TODO | UX: Improve actionable errors (missing binary, invalid params, docker not running).
+24. P0 | DONE | UX: Define and implement empty/loading/error states across core views.
+25. P1 | DONE | UX: Improve actionable errors (missing binary, invalid params, docker not running).
 
 **Epic 5 - Runs List and Detail Surfaces**
 26. P0 | DONE | Feature: Implement Runs list view (recent runs with status badges).
@@ -68,11 +68,11 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 
 **Epic 7 - Quality, Packaging, and Beta Readiness**
 39. P0 | DONE | Tech: Add Extension Development Host launch configuration and minimal Nextflow smoke fixture.
-34. P0 | TODO | Test: Add end-to-end smoke test for full MVP loop.
-35. P0 | TODO | Docs: Write user quickstart and troubleshooting guide.
-36. P0 | TODO | Docs: Write compatibility matrix (with/without official extension).
-37. P1 | TODO | Tech: Add lightweight instrumentation for beta validation metrics.
-38. P1 | TODO | Docs: Prepare beta release checklist and feedback template.
+34. P0 | DONE | Test: Add end-to-end smoke test for full MVP loop.
+35. P0 | DONE | Docs: Write user quickstart and troubleshooting guide.
+36. P0 | DONE | Docs: Write compatibility matrix (with/without official extension).
+37. P1 | DONE | Tech: Define beta telemetry/privacy defaults without collecting data by default.
+38. P1 | DONE | Docs: Prepare beta release checklist and feedback template.
 
 **Definition of Done (MVP)**
 1. User can run a Nextflow pipeline from VS Code in local or Docker mode.

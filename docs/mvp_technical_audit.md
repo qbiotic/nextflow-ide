@@ -15,16 +15,15 @@ What is already in place:
 - Vitest configured through Nx for domain unit tests and architecture tests.
 - Recursive architecture tests enforce the package dependency matrix and composition-root boundary.
 - Package and section READMEs established as implementation deliverables.
+- MVP PRD, official-extension contract, NFR baseline, compatibility matrix, quickstart, and beta checklist are documented.
 
 What is still missing:
 
-- Remaining domain behavior and application use cases beyond the implemented run, resume, stop, and workspace flows.
-- Rich VS Code views, full project-scoped activation, and end-to-end extension verification.
-- Extension-level end-to-end harness using `@vscode/test-electron`.
-- Real extension-level end-to-end test harness using `@vscode/test-electron`.
-- Ongoing synchronization of root, package, and section documentation as implementation advances.
+- Rich project-scoped multi-root activation and broader view polish.
+- Manual Docker and official-extension compatibility validation on release machines.
+- Release hardening, packaging, and beta feedback operations.
 
-The workspace detection adapter, deterministic command builder, versioned run repository, local process runtime, Run/Resume/Stop commands, Runs tree view, run details webview, dedicated logs output channel, artifact discovery, and artifact opening action are now implemented and typechecked. A manual Extension Development Host configuration and minimal pipeline fixture are also available and the fixture runs successfully with Nextflow. The next move is to add extension-level tests and richer empty/loading/error states.
+The MVP implementation now includes workspace detection, deterministic local/Docker commands, versioned persistence, local/Docker runtime routing, Run/Resume/Stop commands, Runs tree view, run details, dedicated logs, artifact discovery/opening, explicit empty/error states, and a real VS Code Extension Development Host smoke test. The remaining work is release hardening, richer multi-root activation, and a manual Docker/official-extension compatibility pass.
 
 ## Current State Assessment
 
@@ -33,15 +32,15 @@ The workspace detection adapter, deterministic command builder, versioned run re
 - `pnpm nx show projects` returns nine projects.
 - `packages/` now contains the core, adapter, test, and extension package skeletons.
 - `pnpm-workspace.yaml` keeps the workspace scoped to `packages/*`.
-- `pnpm run typecheck` and `pnpm run build` pass for the scaffolded monorepo.
+- `pnpm run typecheck`, `pnpm run build`, `pnpm test`, and `pnpm run test:e2e` pass for the current MVP slice.
 
 ### Audit Findings
 
-1. The executable monorepo structure now exists, but it still contains placeholder modules rather than implemented behavior.
+1. The executable monorepo structure and MVP execution path now exist; remaining work is release hardening and broader compatibility.
 2. The repository has crossed the scaffolding threshold and must now prevent drift between code and documentation on every step.
 3. The package-first layout under `packages/*` is now the canonical repository structure and should replace any older `apps/` sketches.
-4. The MVP still depends on a stable run model and runtime port contracts with real implementations.
-5. The extension composition root exists as a shell and must now be wired to real use cases and adapters.
+4. The MVP run model, runtime ports, local/Docker adapters, and composition root are implemented.
+5. The extension composition root is wired to the MVP use cases and adapters.
 6. Architecture tests now enforce forbidden imports, package dependency direction, and the composition-root boundary.
 7. The repository now has enough canonical contracts to start implementing the first use cases without reopening structural decisions.
 8. Tests and documentation now have an explicit toolchain and ownership boundary, but coverage must expand with each implementation slice.

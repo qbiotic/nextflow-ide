@@ -2,8 +2,8 @@ import * as vscode from 'vscode';
 import type { GetRunHistoryUseCase } from '@nextflow-ide/application';
 import type { Run } from '@nextflow-ide/domain';
 
-export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem> {
-  private readonly changeEmitter = new vscode.EventEmitter<RunTreeItem | undefined | void>();
+export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem | RunsMessageItem> {
+  private readonly changeEmitter = new vscode.EventEmitter<RunTreeItem | RunsMessageItem | undefined | void>();
   public readonly onDidChangeTreeData = this.changeEmitter.event;
 
   public constructor(
@@ -15,18 +15,33 @@ export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem
     this.changeEmitter.fire();
   }
 
-  public getTreeItem(element: RunTreeItem): vscode.TreeItem {
+  public getTreeItem(element: RunTreeItem | RunsMessageItem): vscode.TreeItem {
     return element;
   }
 
-  public async getChildren(): Promise<RunTreeItem[]> {
+  public async getChildren(): Promise<Array<RunTreeItem | RunsMessageItem>> {
     const workspaceRoot = this.workspaceRoot();
     if (!workspaceRoot) {
-      return [];
+      return [new RunsMessageItem('Open a workspace to view runs.')];
     }
 
-    const result = await this.getRunHistory.execute({ workspaceRoot });
-    return result.runs.map((run) => new RunTreeItem(run));
+    try {
+      const result = await this.getRunHistory.execute({ workspaceRoot });
+      return result.runs.length > 0
+        ? result.runs.map((run) => new RunTreeItem(run))
+        : [new RunsMessageItem('No runs yet.')];
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to load runs.';
+      return [new RunsMessageItem(`Error: ${message}`)];
+    }
+  }
+}
+
+export class RunsMessageItem extends vscode.TreeItem {
+  public constructor(message: string) {
+    super(message, vscode.TreeItemCollapsibleState.None);
+    this.contextValue = 'nextflowRuns.message';
+    this.iconPath = new vscode.ThemeIcon('info');
   }
 }
 

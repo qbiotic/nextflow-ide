@@ -8,6 +8,8 @@ The current native view is `Nextflow Runs`, backed by `RunsTreeDataProvider` and
 
 Runtime stdout and stderr are published to the dedicated `Nextflow Logs` output channel.
 
+The Runs view renders explicit empty and error items instead of failing silently when no workspace, no runs, or a repository error is present.
+
 ```mermaid
 flowchart LR
   U[Application event] --> P[View projection]

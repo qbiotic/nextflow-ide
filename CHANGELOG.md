@@ -19,6 +19,12 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Added normalized artifact availability and paths to run details.
 - Added `nextflowIde.openArtifact` with validation through `ListArtifactsService` before opening a file.
 - Added 2 artifact gateway tests and expanded application coverage to 11 tests.
+- Implemented Docker runtime routing and Docker availability preflight.
+- Added persistence migration boundary for schema version 1.
+- Added explicit empty and error items to the Runs view.
+- Added the real `@vscode/test-electron` smoke harness and verified it against the minimal fixture.
+- Added quickstart, compatibility matrix, beta checklist, and privacy/telemetry defaults.
+- Added the MVP PRD, official-extension coexistence contract, and NFR baseline.
 - Updated application and extension view READMEs, backlog, and technical audit.
 
 ### feature/run-pipelines

@@ -13,3 +13,5 @@ flowchart LR
 ```
 
 Docker-specific flags remain inside this adapter.
+
+`DockerNextflowRuntime` performs Docker preflight, launches the prepared Docker command, streams output, maps terminal states, and supports cancellation.
