@@ -8,7 +8,8 @@ import {
   RUN_PIPELINE_COMMAND,
   STOP_RUN_COMMAND,
   SHOW_RUN_DETAILS_COMMAND,
-  OPEN_ARTIFACT_COMMAND
+  OPEN_ARTIFACT_COMMAND,
+  SELECT_WORKSPACE_ROOT_COMMAND
 } from './commands/index.js';
 import { RunsTreeDataProvider } from './views/runs-tree.js';
 
@@ -16,15 +17,23 @@ export function activate(context: vscode.ExtensionContext): void {
   const output = vscode.window.createOutputChannel('Nextflow IDE');
   const logs = vscode.window.createOutputChannel('Nextflow Logs');
   const compositionRoot = createExtensionCompositionRoot(context, output, logs);
+  let selectedWorkspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
   const runsProvider = new RunsTreeDataProvider(
     compositionRoot.getRunHistory,
-    () => vscode.workspace.workspaceFolders?.[0]?.uri.fsPath
+    () => selectedWorkspaceRoot
   );
 
   context.subscriptions.push(
     output,
     logs,
     vscode.window.registerTreeDataProvider('nextflowIde.runs', runsProvider),
+    vscode.workspace.onDidChangeWorkspaceFolders(() => {
+      const roots = vscode.workspace.workspaceFolders ?? [];
+      if (!roots.some((folder) => folder.uri.fsPath === selectedWorkspaceRoot)) {
+        selectedWorkspaceRoot = roots[0]?.uri.fsPath;
+        runsProvider.setWorkspaceRoot(selectedWorkspaceRoot);
+      }
+    }),
     vscode.commands.registerCommand(RUN_PIPELINE_COMMAND, async () => {
       const workspaceFolder = await selectWorkspaceFolder();
       if (!workspaceFolder) {
@@ -138,6 +147,22 @@ export function activate(context: vscode.ExtensionContext): void {
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Unable to open the artifact.';
         void vscode.window.showErrorMessage(message);
+      }
+    }),
+    vscode.commands.registerCommand(SELECT_WORKSPACE_ROOT_COMMAND, async () => {
+      const roots = vscode.workspace.workspaceFolders ?? [];
+      if (roots.length < 2) {
+        void vscode.window.showInformationMessage('The workspace has only one root folder.');
+        return;
+      }
+
+      const selection = await vscode.window.showQuickPick(
+        roots.map((folder) => ({ label: folder.name, description: folder.uri.fsPath, folder })),
+        { placeHolder: 'Select the root used by Nextflow Runs' }
+      );
+      if (selection) {
+        selectedWorkspaceRoot = selection.folder.uri.fsPath;
+        runsProvider.setWorkspaceRoot(selectedWorkspaceRoot);
       }
     })
   );

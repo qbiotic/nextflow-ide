@@ -9,11 +9,16 @@ export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem
 
   public constructor(
     private readonly getRunHistory: GetRunHistoryUseCase,
-    private readonly workspaceRoot: () => string | undefined
+    private workspaceRoot: () => string | undefined
   ) {}
 
   public refresh(): void {
     this.changeEmitter.fire();
+  }
+
+  public setWorkspaceRoot(workspaceRoot: string | undefined): void {
+    this.workspaceRoot = () => workspaceRoot;
+    this.refresh();
   }
 
   public getTreeItem(element: RunTreeItem | RunsMessageItem): vscode.TreeItem {

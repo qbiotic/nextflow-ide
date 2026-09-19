@@ -12,6 +12,8 @@ The Runs view renders explicit empty and error items instead of failing silently
 
 `run-list-model.ts` is framework-free and tested independently for newest-first sorting and status presentation.
 
+The Runs provider follows the explicitly selected root and falls back to the first remaining root when workspace folders change.
+
 The Run command selects a workspace root when multiple folders are open, while the Runs view remains scoped to the first root until a dedicated root selector is added.
 
 `run-list-model.ts` is framework-free and tested independently for newest-first sorting and status presentation.
