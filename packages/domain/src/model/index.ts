@@ -16,6 +16,7 @@ export type RunStatus =
 export interface WorkspaceProject {
   rootPath: string;
   entrypointPath: string;
+  entrypointPaths: readonly string[];
   configPath?: string;
   profileNames: readonly string[];
   modulePaths: readonly string[];

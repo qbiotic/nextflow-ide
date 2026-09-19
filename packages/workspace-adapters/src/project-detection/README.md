@@ -12,4 +12,4 @@ flowchart TD
 
 The adapter returns normalized project data through `WorkspaceProjectGateway`.
 
-The current rule requires `main.nf` at the selected workspace root. `nextflow.config` is optional. Module paths are discovered through the injected `WorkspaceFileSystem`; profile extraction is deferred until configuration parsing is specified.
+The detector requires `main.nf` at the selected workspace root, discovers additional root-level `.nf` entrypoints, reads optional `nextflow.config`, extracts names from the `profiles {}` block, and separates nested `.nf` files as modules.

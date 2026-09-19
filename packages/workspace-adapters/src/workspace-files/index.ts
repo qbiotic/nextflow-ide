@@ -1,4 +1,4 @@
-import { readdir, stat } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { WorkspaceFileSystem } from '../project-detection/index.js';
 
@@ -8,6 +8,14 @@ export interface WorkspaceFileSnapshot {
 }
 
 export class NodeWorkspaceFileSystem implements WorkspaceFileSystem {
+  public async readText(path: string): Promise<string | undefined> {
+    try {
+      return await readFile(path, 'utf8');
+    } catch {
+      return undefined;
+    }
+  }
+
   public async exists(path: string): Promise<boolean> {
     try {
       await stat(path);

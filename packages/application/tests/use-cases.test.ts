@@ -122,6 +122,7 @@ describe('DetectWorkspaceService', () => {
     const project: WorkspaceProject = {
       rootPath: '/workspace/pipeline',
       entrypointPath: '/workspace/pipeline/main.nf',
+      entrypointPaths: ['/workspace/pipeline/main.nf'],
       profileNames: ['standard'],
       modulePaths: []
     };

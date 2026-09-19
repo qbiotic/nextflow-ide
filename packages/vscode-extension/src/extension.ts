@@ -53,7 +53,7 @@ export function activate(context: vscode.ExtensionContext): void {
         const result = await compositionRoot.runPipeline.execute({
           configuration: {
             workspaceRoot: project.rootPath,
-            entrypointPath: project.entrypointPath,
+            entrypointPath: await requestEntrypoint(project.entrypointPaths, project.entrypointPath),
             runtimeMode: 'local',
             profileNames: await requestProfiles(project.profileNames),
             paramsFilePath: await requestParamsFile(),
@@ -190,6 +190,18 @@ async function requestProfiles(defaultProfiles: readonly string[]): Promise<read
     .split(',')
     .map((profile) => profile.trim())
     .filter(Boolean);
+}
+
+async function requestEntrypoint(
+  entrypointPaths: readonly string[],
+  defaultEntrypoint: string
+): Promise<string> {
+  if (entrypointPaths.length <= 1) return defaultEntrypoint;
+  const selected = await vscode.window.showQuickPick(
+    entrypointPaths.map((path) => ({ label: path.split('/').at(-1) ?? path, description: path, path })),
+    { placeHolder: 'Select the Nextflow entrypoint' }
+  );
+  return selected?.path ?? defaultEntrypoint;
 }
 
 async function requestParamsFile(): Promise<string | undefined> {
