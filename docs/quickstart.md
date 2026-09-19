@@ -13,9 +13,10 @@
 1. Open this repository in VS Code.
 2. Start `Run qbiotic-flow Extension` from Run and Debug.
 3. In the Extension Development Host, open `qbiotic-flow Runs`.
-4. Run `qbiotic-flow: Run Pipeline` from the Command Palette.
-5. Inspect status messages in `qbiotic-flow` and process output in `qbiotic-flow Logs`.
-6. Select a run to inspect details and available artifacts.
+4. Open the qbiotic-flow icon in the Activity Bar if the view is not already visible.
+5. Run `qbiotic-flow: Run Pipeline` from the Command Palette.
+6. Inspect status messages in `qbiotic-flow` and process output in `qbiotic-flow Logs`.
+7. Select a run to inspect details and available artifacts.
 
 The fixture is `examples/minimal-pipeline` and is intentionally self-contained.
 

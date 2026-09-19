@@ -52,13 +52,28 @@
       }
     ],
     "views": {
-      "explorer": [
+      "qbioticFlow": [
         {
           "id": "nextflowIde.runs",
           "name": "qbiotic-flow Runs"
         }
       ]
-    }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "qbioticFlow",
+          "title": "qbiotic-flow",
+          "icon": "./qbiotic.svg"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "nextflowIde.runs",
+        "contents": "Run qbiotic-flow to see pipeline executions."
+      }
+    ]
   },
   "keywords": ["nextflow", "vscode", "bioinformatics"],
   "main": "./dist/index.js",

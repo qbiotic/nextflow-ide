@@ -13,7 +13,7 @@ This package is the outer composition root and inbound adapter for the qbiotic-f
 - Instantiate concrete adapters and application use cases.
 - Translate VS Code events into typed application requests.
 
-The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `qbiotic-flow Runs` Explorer view. Run supports multi-root selection, multiple entrypoints, discovered config profiles, comma-separated profile overrides, and an optional JSON/YAML params file selected through the VS Code file picker. The Runs view can switch its active root independently.
+The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `qbiotic-flow Runs` Activity Bar view using the root `qbiotic.svg` brand asset. Run supports multi-root selection, multiple entrypoints, discovered config profiles, comma-separated profile overrides, and an optional JSON/YAML params file selected through the VS Code file picker.
 
 Activation is scoped to workspaces containing `main.nf` or to one of the contributed commands/views; the official Nextflow extension is not required.
 
