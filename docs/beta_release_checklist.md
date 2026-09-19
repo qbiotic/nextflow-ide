@@ -6,6 +6,7 @@
 - [ ] `pnpm run typecheck` succeeds for all Nx projects.
 - [ ] `pnpm test` succeeds.
 - [ ] `pnpm run test:e2e` succeeds on the release machine.
+- [ ] `pnpm run package:vsix` produces `dist/nextflow-ide-mvp.vsix`.
 - [ ] Manual local Nextflow smoke run succeeds.
 - [ ] Manual Docker smoke run succeeds.
 

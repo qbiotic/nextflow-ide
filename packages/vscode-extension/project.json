@@ -11,6 +11,13 @@
       "options": {
         "command": "vitest run --config vitest.config.mts packages/vscode-extension/tests"
       }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "mkdir -p ../../dist && ../../node_modules/.bin/vsce package --no-dependencies --skip-license --allow-missing-repository --out ../../dist/nextflow-ide-mvp.vsix",
+        "cwd": "packages/vscode-extension"
+      }
     }
   }
 }

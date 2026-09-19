@@ -11,6 +11,7 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Separated nested module scripts from root-level entrypoints.
 - Added entrypoint selection to the Run command.
 - Replaced free-form params-file text input with a validated VS Code JSON/YAML file picker.
+- Added `pnpm run package:vsix` and validated a 12-file `dist/nextflow-ide-mvp.vsix` artifact.
 - Added project detection coverage for multiple entrypoints, profiles, and modules.
 
 ### feature/multi-root-ui-params

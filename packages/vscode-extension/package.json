@@ -1,5 +1,6 @@
 {
-  "name": "@nextflow-ide/vscode-extension",
+  "name": "nextflow-ide",
+  "publisher": "nextflow-ide",
   "version": "0.0.1",
   "private": true,
   "type": "module",

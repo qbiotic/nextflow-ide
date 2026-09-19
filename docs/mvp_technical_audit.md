@@ -21,9 +21,9 @@ What is still missing:
 
 - Broader view polish and release hardening.
 - Manual Docker and official-extension compatibility validation on release machines.
-- Release hardening, packaging, and beta feedback operations.
+- Beta feedback operations and release-machine compatibility checks.
 
-The MVP implementation now includes workspace detection, project-scoped activation, multi-root selection, multiple entrypoints, config profile discovery, profile/params input, deterministic local/Docker commands, versioned persistence, local/Docker runtime routing, Run/Resume/Stop commands, Runs tree view, run details, dedicated logs, artifact discovery/opening, explicit empty/error states, view-model tests, and a real VS Code Extension Development Host smoke test. The remaining work is release hardening and a manual official-extension compatibility pass.
+The MVP implementation now includes workspace detection, project-scoped activation, multi-root selection, multiple entrypoints, config profile discovery, profile/params input, deterministic local/Docker commands, versioned persistence, local/Docker runtime routing, Run/Resume/Stop commands, Runs tree view, run details, dedicated logs, artifact discovery/opening, explicit empty/error states, view-model tests, a real VS Code Extension Development Host smoke test, and VSIX packaging. The remaining work is beta feedback and release-machine compatibility checks.
 
 ## Current State Assessment
 

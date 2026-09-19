@@ -36,6 +36,10 @@ This is the only package allowed to know how concrete adapters are assembled. Bu
 
 The extension package typechecks against the VS Code API. Full activation scenarios still require `@vscode/test-electron`.
 
+## Packaging
+
+Run `pnpm run package:vsix` from the repository root to create `dist/nextflow-ide-mvp.vsix`. The package excludes TypeScript sources, internal configuration, tests, e2e files, and local dependencies through `.vscodeignore`.
+
 ## Manual Smoke Test
 
 Use the `Run Nextflow IDE Extension` launch configuration from `.vscode/launch.json`. It builds the extension, opens an Extension Development Host against `examples/minimal-pipeline`, and exposes the Run command and Runs view. The fixture has been verified with Nextflow 26.04.6 outside the Extension Development Host.
