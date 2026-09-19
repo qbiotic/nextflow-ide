@@ -4,7 +4,7 @@ Inbound adapters translate command-palette and context-menu actions into applica
 
 Commands must validate input, delegate immediately, and avoid business logic.
 
-The registered commands include `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, and `nextflowIde.selectWorkspaceRoot`. Run selects a workspace root when multiple roots are open, accepts optional profiles and params file input, and requires `main.nf`; the root selector controls the Runs view independently.
+The registered commands include `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, and `nextflowIde.selectWorkspaceRoot`. Run selects a workspace root when multiple roots are open, accepts optional profiles and a JSON/YAML params file selected through the file picker, and requires `main.nf`; the root selector controls the Runs view independently.
 
 ```mermaid
 flowchart LR

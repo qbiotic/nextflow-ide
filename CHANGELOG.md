@@ -10,6 +10,7 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Added `nextflow.config` text reading and profile-name extraction.
 - Separated nested module scripts from root-level entrypoints.
 - Added entrypoint selection to the Run command.
+- Replaced free-form params-file text input with a validated VS Code JSON/YAML file picker.
 - Added project detection coverage for multiple entrypoints, profiles, and modules.
 
 ### feature/multi-root-ui-params

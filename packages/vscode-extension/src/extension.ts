@@ -205,11 +205,14 @@ async function requestEntrypoint(
 }
 
 async function requestParamsFile(): Promise<string | undefined> {
-  const value = await vscode.window.showInputBox({
-    prompt: 'Params file path (optional)',
-    placeHolder: '/path/to/params.json'
+  const selection = await vscode.window.showOpenDialog({
+    canSelectFiles: true,
+    canSelectFolders: false,
+    canSelectMany: false,
+    openLabel: 'Use Params File',
+    filters: { 'Parameter files': ['json', 'yaml', 'yml'] }
   });
-  return value?.trim() || undefined;
+  return selection?.[0]?.fsPath;
 }
 
 function renderRunDetails(
