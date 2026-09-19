@@ -539,11 +539,10 @@ Do not build these before the first smoke path exists:
 
 ## Immediate Next Actions
 
-1. Implement versioned run persistence behind `RunRepository`.
-2. Add the remaining run lifecycle use cases on top of the existing ports.
-3. Implement the local process runtime and event translation.
-4. Add `@vscode/test-electron` when the first executable extension command exists.
-5. Update root, package, and section READMEs plus backlog, plan, and this audit in the same change set as each implementation slice.
+1. Perform manual Docker validation on release machines.
+2. Perform compatibility validation with and without the official Nextflow extension.
+3. Improve deeper project indexing and multi-root project modeling beyond the MVP root selector.
+4. Keep root, package, and section READMEs plus backlog, plan, and this audit synchronized with follow-up work.
 
 ## Decision
 

@@ -6,7 +6,7 @@ Build a VS Code extension focused on local Nextflow operations for a clearly def
 
 **Documentation constraint:** every implementation step must update the affected repository documents in the same change set. Root README, package and section READMEs, backlog, technical audit, and decision documents are part of the deliverable state and must not drift from the codebase.
 
-**Testing constraint:** unit and architecture tests use Vitest through Nx targets. Extension-level end-to-end tests will use `@vscode/test-electron`; Playwright is reserved for rich webview scenarios.
+**Testing constraint:** unit and architecture tests use Vitest through Nx targets. Extension-level end-to-end tests use `@vscode/test-electron`; Playwright is reserved for future rich webview scenarios.
 
 **Steps**
 1. Phase 0 - Product Lock (blocks all coding): finalize MVP scope and acceptance criteria in a one-page PRD with explicit in/out, target persona, and success metrics. Include explicit non-goals for platform/DevOps use cases. (*blocks steps 2-8*)
