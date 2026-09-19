@@ -1,4 +1,4 @@
-# Nextflow IDE Quickstart
+# qbiotic-flow Quickstart
 
 ## Prerequisites
 
@@ -11,21 +11,21 @@
 ## Run the Smoke Fixture
 
 1. Open this repository in VS Code.
-2. Start `Run Nextflow IDE Extension` from Run and Debug.
-3. In the Extension Development Host, open `Nextflow Runs`.
-4. Run `Nextflow: Run Pipeline` from the Command Palette.
-5. Inspect status messages in `Nextflow IDE` and process output in `Nextflow Logs`.
+2. Start `Run qbiotic-flow Extension` from Run and Debug.
+3. In the Extension Development Host, open `qbiotic-flow Runs`.
+4. Run `qbiotic-flow: Run Pipeline` from the Command Palette.
+5. Inspect status messages in `qbiotic-flow` and process output in `qbiotic-flow Logs`.
 6. Select a run to inspect details and available artifacts.
 
 The fixture is `examples/minimal-pipeline` and is intentionally self-contained.
 
 ## Commands
 
-- `Nextflow: Run Pipeline`: starts a local run from the workspace `main.nf`.
-- `Nextflow: Resume Run`: resumes a failed or resumable run by id.
-- `Nextflow: Stop Run`: requests cancellation for an active run.
-- `Nextflow: Show Run Details`: opens the run configuration, status, timestamps, and artifact state.
-- `Nextflow: Open Artifact`: opens a discovered report, trace, or timeline after validation.
+- `qbiotic-flow: Run Pipeline`: starts a local run from the workspace `main.nf`.
+- `qbiotic-flow: Resume Run`: resumes a failed or resumable run by id.
+- `qbiotic-flow: Stop Run`: requests cancellation for an active run.
+- `qbiotic-flow: Show Run Details`: opens the run configuration, status, timestamps, and artifact state.
+- `qbiotic-flow: Open Artifact`: opens a discovered report, trace, or timeline after validation.
 
 ## Troubleshooting
 

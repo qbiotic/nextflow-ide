@@ -1,11 +1,15 @@
 {
-  "name": "nextflow-ide",
-  "publisher": "nextflow-ide",
+  "name": "qbiotic-flow",
+  "publisher": "qbiotic-flow",
+  "author": {
+    "name": "Pablo Pimàs Verge",
+    "email": "pablo@pimas.cat"
+  },
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "displayName": "Nextflow IDE",
-  "description": "VS Code extension scaffold for the Nextflow IDE MVP.",
+  "displayName": "qbiotic-flow",
+  "description": "A local Nextflow development experience for Visual Studio Code.",
   "engines": {
     "vscode": "^1.104.0"
   },
@@ -24,34 +28,34 @@
     "commands": [
       {
         "command": "nextflowIde.runPipeline",
-        "title": "Nextflow: Run Pipeline"
+        "title": "qbiotic-flow: Run Pipeline"
       },
       {
         "command": "nextflowIde.resumeRun",
-        "title": "Nextflow: Resume Run"
+        "title": "qbiotic-flow: Resume Run"
       },
       {
         "command": "nextflowIde.stopRun",
-        "title": "Nextflow: Stop Run"
+        "title": "qbiotic-flow: Stop Run"
       },
       {
         "command": "nextflowIde.showRunDetails",
-        "title": "Nextflow: Show Run Details"
+        "title": "qbiotic-flow: Show Run Details"
       },
       {
         "command": "nextflowIde.openArtifact",
-        "title": "Nextflow: Open Artifact"
+        "title": "qbiotic-flow: Open Artifact"
       },
       {
         "command": "nextflowIde.selectWorkspaceRoot",
-        "title": "Nextflow: Select Workspace Root"
+        "title": "qbiotic-flow: Select Workspace Root"
       }
     ],
     "views": {
       "explorer": [
         {
           "id": "nextflowIde.runs",
-          "name": "Nextflow Runs"
+          "name": "qbiotic-flow Runs"
         }
       ]
     }

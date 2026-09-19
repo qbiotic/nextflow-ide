@@ -1,6 +1,8 @@
-# Nextflow IDE for VS Code
+# qbiotic-flow for VS Code
 
-A developer-focused IDE experience for **Nextflow** built on top of **Visual Studio Code** and organized as an **Nx monorepo**.
+**qbiotic-flow** is a developer-focused local IDE experience for **Nextflow** built on top of **Visual Studio Code** and organized as an **Nx monorepo**.
+
+Author: Pablo Pimàs Verge ([pablo@pimas.cat](mailto:pablo@pimas.cat)).
 
 This project aims to turn VS Code into a dedicated environment for developing, configuring, running, debugging, and inspecting Nextflow pipelines locally. Nextflow already has official VS Code language support for diagnostics, navigation, formatting, schema checks, and DAG previews; this project focuses on the missing operational layer: local execution UX, run management, artifact access, and developer workflows. [web:166][web:202][web:240]
 

@@ -1,8 +1,10 @@
 # VS Code Extension
 
+Public product: **qbiotic-flow**. Author: Pablo Pimàs Verge ([pablo@pimas.cat](mailto:pablo@pimas.cat)).
+
 ## Purpose
 
-This package is the outer composition root and inbound adapter for the Nextflow IDE extension.
+This package is the outer composition root and inbound adapter for the qbiotic-flow extension.
 
 ## Responsibilities
 
@@ -11,7 +13,7 @@ This package is the outer composition root and inbound adapter for the Nextflow 
 - Instantiate concrete adapters and application use cases.
 - Translate VS Code events into typed application requests.
 
-The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `Nextflow Runs` Explorer view. Run supports multi-root selection, multiple entrypoints, discovered config profiles, comma-separated profile overrides, and an optional JSON/YAML params file selected through the VS Code file picker. The Runs view can switch its active root independently.
+The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `qbiotic-flow Runs` Explorer view. Run supports multi-root selection, multiple entrypoints, discovered config profiles, comma-separated profile overrides, and an optional JSON/YAML params file selected through the VS Code file picker. The Runs view can switch its active root independently.
 
 Activation is scoped to workspaces containing `main.nf` or to one of the contributed commands/views; the official Nextflow extension is not required.
 
@@ -38,8 +40,8 @@ The extension package typechecks against the VS Code API. Full activation scenar
 
 ## Packaging
 
-Run `pnpm run package:vsix` from the repository root to create `dist/nextflow-ide-mvp.vsix`. The package excludes TypeScript sources, internal configuration, tests, e2e files, and local dependencies through `.vscodeignore`.
+Run `pnpm run package:vsix` from the repository root to create `dist/qbiotic-flow.vsix`. The package excludes TypeScript sources, internal configuration, tests, e2e files, and local dependencies through `.vscodeignore`.
 
 ## Manual Smoke Test
 
-Use the `Run Nextflow IDE Extension` launch configuration from `.vscode/launch.json`. It builds the extension, opens an Extension Development Host against `examples/minimal-pipeline`, and exposes the Run command and Runs view. The fixture has been verified with Nextflow 26.04.6 outside the Extension Development Host.
+Use the `Run qbiotic-flow Extension` launch configuration from `.vscode/launch.json`. It builds the extension, opens an Extension Development Host against `examples/minimal-pipeline`, and exposes the Run command and Runs view. The fixture has been verified with Nextflow 26.04.6 outside the Extension Development Host.

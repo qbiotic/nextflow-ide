@@ -1,8 +1,17 @@
-# Changelog
+# qbiotic-flow Changelog
 
 All notable changes to the Nextflow IDE for VS Code are documented in this file.
 
+The public product name is **qbiotic-flow**. The author is Pablo Pimàs Verge ([pablo@pimas.cat](mailto:pablo@pimas.cat)).
+
 ## [Unreleased] 2026-09-??
+
+### feature/qbiotic-flow-branding
+
+- Branded the public VS Code extension as `qbiotic-flow`.
+- Added author metadata for Pablo Pimàs Verge (`pablo@pimas.cat`).
+- Updated visible command titles, view names, output channels, launch tasks, quickstart, compatibility docs, and VSIX name.
+- Preserved internal `nextflowIde.*` command ids and `@nextflow-ide/*` package imports for compatibility.
 
 ### feature/deep-index
 

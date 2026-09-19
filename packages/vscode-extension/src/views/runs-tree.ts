@@ -46,7 +46,7 @@ export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem
 export class RunsMessageItem extends vscode.TreeItem {
   public constructor(message: string) {
     super(message, vscode.TreeItemCollapsibleState.None);
-    this.contextValue = 'nextflowRuns.message';
+    this.contextValue = 'qbioticFlowRuns.message';
     this.iconPath = new vscode.ThemeIcon('info');
   }
 }
