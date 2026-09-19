@@ -57,7 +57,7 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 **Epic 5 - Runs List and Detail Surfaces**
 26. P0 | DONE | Feature: Implement Runs list view (recent runs with status badges).
 27. P0 | DONE | Feature: Implement Run details view (config snapshot, timestamps, execution mode).
-28. P1 | TODO | UX: Add quick actions (open logs, resume, open artifacts).
+28. P1 | DONE | UX: Add quick actions (open logs, resume, open artifacts).
 29. P1 | TODO | Test: Add view-model tests for sorting/filtering/status rendering.
 
 **Epic 6 - Artifact Baseline**

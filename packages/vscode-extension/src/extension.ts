@@ -7,7 +7,8 @@ import {
   RESUME_RUN_COMMAND,
   RUN_PIPELINE_COMMAND,
   STOP_RUN_COMMAND,
-  SHOW_RUN_DETAILS_COMMAND
+  SHOW_RUN_DETAILS_COMMAND,
+  OPEN_ARTIFACT_COMMAND
 } from './commands/index.js';
 import { RunsTreeDataProvider } from './views/runs-tree.js';
 
@@ -108,11 +109,33 @@ export function activate(context: vscode.ExtensionContext): void {
           'nextflowIde.runDetails',
           `Run ${run.id}`,
           vscode.ViewColumn.Active,
-          { enableScripts: false }
+          { enableScripts: false, enableCommandUris: true }
         );
         panel.webview.html = renderRunDetails(run, artifacts);
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Unable to load run details.';
+        void vscode.window.showErrorMessage(message);
+      }
+    }),
+    vscode.commands.registerCommand(OPEN_ARTIFACT_COMMAND, async (runId?: string, kind?: string) => {
+      if (!runId || !kind) {
+        void vscode.window.showWarningMessage('Select an artifact to open.');
+        return;
+      }
+
+      try {
+        const { artifacts } = await compositionRoot.listArtifacts.execute({ runId });
+        const artifact = artifacts.find(
+          (candidate) => candidate.kind === kind && candidate.available && candidate.path
+        );
+        if (!artifact?.path) {
+          void vscode.window.showWarningMessage(`Artifact ${kind} is not available for run ${runId}.`);
+          return;
+        }
+
+        await vscode.commands.executeCommand('vscode.open', vscode.Uri.file(artifact.path));
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unable to open the artifact.';
         void vscode.window.showErrorMessage(message);
       }
     })
@@ -136,7 +159,9 @@ function renderRunDetails(
       <dt>Created</dt><dd>${escapeHtml(run.timestamps.createdAt)}</dd>
       <dt>Updated</dt><dd>${escapeHtml(run.timestamps.updatedAt)}</dd>
       <dt>Command</dt><dd><code>${escapeHtml(run.commandLine ?? 'Not started')}</code></dd>
-      <dt>Artifacts</dt><dd>${artifacts.map((artifact) => `${escapeHtml(artifact.kind)}: ${artifact.available ? escapeHtml(artifact.path ?? 'available') : 'not found'}`).join('<br>')}</dd>
+      <dt>Artifacts</dt><dd>${artifacts.map((artifact) => artifact.available && artifact.path
+        ? `<a href="command:nextflowIde.openArtifact?${encodeURIComponent(JSON.stringify([run.id, artifact.kind]))}">${escapeHtml(artifact.kind)}</a>: ${escapeHtml(artifact.path)}`
+        : `${escapeHtml(artifact.kind)}: not found`).join('<br>')}</dd>
     </dl>
   </body>
 </html>`;

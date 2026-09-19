@@ -24,7 +24,7 @@ What is still missing:
 - Real extension-level end-to-end test harness using `@vscode/test-electron`.
 - Ongoing synchronization of root, package, and section documentation as implementation advances.
 
-The workspace detection adapter, deterministic command builder, versioned run repository, local process runtime, Run/Resume/Stop commands, Runs tree view, run details webview, dedicated logs output channel, and artifact discovery are now implemented and typechecked. A manual Extension Development Host configuration and minimal pipeline fixture are also available and the fixture runs successfully with Nextflow. The next move is to add artifact opening actions and extension-level tests.
+The workspace detection adapter, deterministic command builder, versioned run repository, local process runtime, Run/Resume/Stop commands, Runs tree view, run details webview, dedicated logs output channel, artifact discovery, and artifact opening action are now implemented and typechecked. A manual Extension Development Host configuration and minimal pipeline fixture are also available and the fixture runs successfully with Nextflow. The next move is to add extension-level tests and richer empty/loading/error states.
 
 ## Current State Assessment
 

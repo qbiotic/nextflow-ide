@@ -17,6 +17,7 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Added the dedicated `Nextflow Logs` output channel for stdout and stderr events.
 - Implemented `ListArtifactsService` and `WorkspaceArtifactGateway` for report, trace, and timeline discovery.
 - Added normalized artifact availability and paths to run details.
+- Added `nextflowIde.openArtifact` with validation through `ListArtifactsService` before opening a file.
 - Added 2 artifact gateway tests and expanded application coverage to 11 tests.
 - Updated application and extension view READMEs, backlog, and technical audit.
 
