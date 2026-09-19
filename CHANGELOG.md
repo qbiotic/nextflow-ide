@@ -35,6 +35,8 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 - Added the MVP PRD, official-extension coexistence contract, and NFR baseline.
 - Added multi-root workspace selection and optional profile/params-file input to `Run Pipeline`.
 - Added `nextflowIde.selectWorkspaceRoot` and independent root selection for the Runs view.
+- Pinned the default Docker image to the published `nextflow/nextflow:26.04.6` tag after validating Docker Hub availability.
+- Fixed Docker invocation to call `nextflow` explicitly through the image entrypoint wrapper.
 - Added `workspaceContains:main.nf` project-scoped activation without requiring the official Nextflow extension.
 - Completed persistence migration boundary and view-model coverage status in the backlog.
 - Synchronized the implementation plan and audit with the completed MVP surfaces.

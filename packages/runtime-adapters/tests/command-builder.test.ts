@@ -58,6 +58,7 @@ describe('NextflowCommandBuilder', () => {
       '-w',
       '/workspace/pipeline with spaces',
       'nextflow:test',
+      'nextflow',
       'run',
       '/workspace/pipeline with spaces/main.nf'
     ]);
