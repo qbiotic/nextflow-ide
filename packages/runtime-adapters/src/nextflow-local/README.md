@@ -15,4 +15,4 @@ sequenceDiagram
 
 This adapter owns Node process details; those details must not cross into domain or application contracts.
 
-The current slice only prepares commands. Process spawning and monitoring remain the next runtime implementation step.
+`LocalNextflowRuntime` now performs preflight, launches through the injected `ProcessLauncher`, publishes stdout/stderr and terminal status events, and supports SIGTERM cancellation. The Docker strategy and real VS Code wiring remain separate.

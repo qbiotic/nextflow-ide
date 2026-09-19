@@ -4,6 +4,24 @@ All notable changes to the Nextflow IDE for VS Code are documented in this file.
 
 ## [Unreleased] 2026-09-??
 
+### feature/local-runtime
+
+- Implemented `LocalNextflowRuntime` behind `RuntimeGateway`.
+- Added injectable `ProcessLauncher` and `ManagedProcess` abstractions.
+- Added `NodeProcessLauncher` for local child-process execution.
+- Added Nextflow executable preflight through `nextflow -version`.
+- Added stdout/stderr event publication, exit-code status mapping, process tracking, and SIGTERM cancellation.
+- Added 3 local runtime tests and verified 6 runtime adapter tests pass in total.
+- Updated runtime READMEs, backlog, implementation plan, and technical audit.
+
+### feature/run-repository
+
+- Implemented versioned run persistence through `MementoRunRepository` and the infrastructure-neutral `StateStore` port.
+- Added schema version 1 serialization for run-history envelopes.
+- Added workspace filtering, run lookup, save, update, invalid-state handling, and unknown-run protection.
+- Added 3 persistence tests and a state-adapters Nx test target.
+- Updated state adapter READMEs, backlog, and technical audit.
+
 ### feature/command-builder
 
 - Implemented `NextflowWorkspaceDetector` with an injected filesystem port.

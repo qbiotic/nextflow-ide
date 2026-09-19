@@ -11,6 +11,8 @@ This package persists and restores application state using VS Code workspace and
 - Apply migrations between persistence schema versions.
 - Keep persistence details outside domain and application code.
 
+`MementoRunRepository` implements `RunRepository` over the generic `StateStore` port. The current schema is version 1 and stores all runs in the `nextflow-ide.run-history` key.
+
 ```mermaid
 sequenceDiagram
   participant U as Use case
@@ -24,4 +26,4 @@ sequenceDiagram
 
 ## Testing
 
-Repository tests use an in-memory state fake and verify round trips, corrupted data handling, retention, and migrations.
+Repository tests use an in-memory state fake and verify save, update, lookup, workspace filtering, invalid state handling, and unknown-run protection.

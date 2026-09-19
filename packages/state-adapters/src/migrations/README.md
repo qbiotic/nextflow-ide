@@ -10,3 +10,5 @@ flowchart LR
 ```
 
 Each migration must be deterministic and covered by compatibility tests.
+
+The current persistence version is `1`; no migration is required yet. Future schema changes must add a migration before changing the current version.
