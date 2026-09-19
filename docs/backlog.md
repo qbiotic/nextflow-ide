@@ -33,18 +33,18 @@ Prioritized backlog aligned with the approved MVP scope (Edit + Run + Logs + Res
 
 **Epic 2 - Runtime Adapter (Local + Docker)**
 9. P0 | DONE | Tech: Define runtime adapter interface (prepare command, launch, monitor, stop, resume).
-10. P0 | TODO | Feature: Implement local runtime provider (macOS/Linux).
+10. P0 | IN PROGRESS | Feature: Implement local runtime provider (macOS/Linux).
 11. P0 | TODO | Feature: Implement Docker runtime provider.
 12. P0 | DONE | Tech: Add deterministic command builder with safe argument escaping.
 13. P1 | DONE | Test: Unit test command builder edge cases (paths with spaces, env vars, profiles).
-14. P1 | TODO | Tech: Add preflight checks (nextflow binary, docker availability when selected).
+14. P1 | IN PROGRESS | Tech: Add preflight checks (Nextflow executable implemented; Docker check pending).
 
 **Epic 3 - Run State and Persistence**
 15. P0 | DONE | Tech: Define run lifecycle states (queued/running/succeeded/failed/canceled/resumable).
 16. P0 | DONE | Tech: Design run metadata schema (id, command, params snapshot, timestamps, workspace context).
-17. P0 | TODO | Feature: Persist run records in workspace/user state with version tag.
-18. P1 | TODO | Tech: Add migration mechanism for persisted schema versions.
-19. P1 | TODO | Test: Add state-transition tests and persistence compatibility tests.
+17. P0 | DONE | Feature: Persist run records in workspace/user state with version tag.
+18. P1 | IN PROGRESS | Tech: Add migration mechanism for persisted schema versions.
+19. P1 | DONE | Test: Add state-transition tests and persistence compatibility tests.
 
 **Epic 4 - MVP User Workflow (Edit -> Run -> Logs -> Resume)**
 20. P0 | TODO | Feature: Add Run command from command palette with basic launch profile input.

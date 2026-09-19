@@ -19,12 +19,12 @@ What is already in place:
 What is still missing:
 
 - Remaining domain behavior and application use cases beyond `DetectWorkspace` and `RunPipeline`.
-- Real VS Code activation, commands, views, process runtime, and persistence implementations.
+- Real VS Code activation, commands, views, and concrete VS Code state-store wiring.
 - MVP runtime fixtures and an extension-level end-to-end harness.
 - Real extension-level end-to-end test harness using `@vscode/test-electron`.
 - Ongoing synchronization of root, package, and section documentation as implementation advances.
 
-The workspace detection adapter and deterministic command builder are now implemented and tested. The next move is to implement persistence and the local process runtime behind the existing ports.
+The workspace detection adapter, deterministic command builder, versioned run repository, and local process runtime are now implemented and tested. The next move is to wire persistence and runtime into the extension composition root, then add the first extension command.
 
 ## Current State Assessment
 
