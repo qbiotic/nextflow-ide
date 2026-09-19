@@ -23,7 +23,7 @@ export class NextflowCommandBuilder implements RuntimeCommandFactory {
     this.options = {
       nextflowExecutable: options.nextflowExecutable ?? 'nextflow',
       dockerExecutable: options.dockerExecutable ?? 'docker',
-      dockerImage: options.dockerImage ?? 'nextflow/nextflow:latest'
+      dockerImage: options.dockerImage ?? 'nextflow/nextflow:26.04.6'
     };
   }
 
@@ -82,6 +82,7 @@ export class NextflowCommandBuilder implements RuntimeCommandFactory {
       '-w',
       workingDirectory,
       this.options.dockerImage,
+      'nextflow',
       ...nextflowArgs
     ];
 

@@ -19,11 +19,11 @@ What is already in place:
 
 What is still missing:
 
-- Rich project-scoped multi-root activation and broader view polish.
+- Broader view polish and release hardening.
 - Manual Docker and official-extension compatibility validation on release machines.
 - Release hardening, packaging, and beta feedback operations.
 
-The MVP implementation now includes workspace detection, deterministic local/Docker commands, versioned persistence, local/Docker runtime routing, Run/Resume/Stop commands, Runs tree view, run details, dedicated logs, artifact discovery/opening, explicit empty/error states, and a real VS Code Extension Development Host smoke test. The remaining work is release hardening, richer multi-root activation, and a manual Docker/official-extension compatibility pass.
+The MVP implementation now includes workspace detection, project-scoped activation, multi-root selection, profile/params input, deterministic local/Docker commands, versioned persistence, local/Docker runtime routing, Run/Resume/Stop commands, Runs tree view, run details, dedicated logs, artifact discovery/opening, explicit empty/error states, view-model tests, and a real VS Code Extension Development Host smoke test. The remaining work is release hardening, deeper project indexing, and a manual Docker compatibility pass.
 
 ## Current State Assessment
 
@@ -539,11 +539,10 @@ Do not build these before the first smoke path exists:
 
 ## Immediate Next Actions
 
-1. Implement versioned run persistence behind `RunRepository`.
-2. Add the remaining run lifecycle use cases on top of the existing ports.
-3. Implement the local process runtime and event translation.
-4. Add `@vscode/test-electron` when the first executable extension command exists.
-5. Update root, package, and section READMEs plus backlog, plan, and this audit in the same change set as each implementation slice.
+1. Perform manual Docker validation on release machines.
+2. Perform compatibility validation with and without the official Nextflow extension.
+3. Improve deeper project indexing and multi-root project modeling beyond the MVP root selector.
+4. Keep root, package, and section READMEs plus backlog, plan, and this audit synchronized with follow-up work.
 
 ## Decision
 

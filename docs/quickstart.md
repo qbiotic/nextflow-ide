@@ -5,6 +5,8 @@
 - VS Code 1.104 or newer.
 - Nextflow available on `PATH` for local runs.
 - Docker Desktop or Docker Engine running for Docker runs.
+- The default Docker image is `nextflow/nextflow:26.04.6`.
+- The Docker command explicitly invokes `nextflow` inside the image.
 
 ## Run the Smoke Fixture
 

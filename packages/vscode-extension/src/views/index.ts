@@ -6,3 +6,5 @@ export interface ViewContribution {
 export const viewContributions: ViewContribution[] = [];
 
 export * from './runs-tree.js';
+export * from './run-list-model.js';
+export * from './run-list-model.js';

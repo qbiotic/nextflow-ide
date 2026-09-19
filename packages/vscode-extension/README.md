@@ -11,7 +11,9 @@ This package is the outer composition root and inbound adapter for the Nextflow 
 - Instantiate concrete adapters and application use cases.
 - Translate VS Code events into typed application requests.
 
-The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, and `nextflowIde.showRunDetails`, plus a `Nextflow Runs` Explorer view. Selecting a run opens a read-only details webview. Runtime status events are visible in `Nextflow IDE`, while stdout/stderr are visible in `Nextflow Logs`.
+The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `Nextflow Runs` Explorer view. Run supports multi-root selection, comma-separated profiles, and an optional params file. The Runs view can switch its active root independently. Selecting a run opens a read-only details webview. Runtime status events are visible in `Nextflow IDE`, while stdout/stderr are visible in `Nextflow Logs`.
+
+Activation is scoped to workspaces containing `main.nf` or to one of the contributed commands/views; the official Nextflow extension is not required.
 
 ## Composition Root
 
