@@ -13,7 +13,7 @@ This package is the outer composition root and inbound adapter for the qbiotic-f
 - Instantiate concrete adapters and application use cases.
 - Translate VS Code events into typed application requests.
 
-The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `qbiotic-flow Runs` Explorer view. Run supports multi-root selection, multiple entrypoints, discovered config profiles, comma-separated profile overrides, and an optional JSON/YAML params file selected through the VS Code file picker. The Runs view can switch its active root independently.
+The extension currently provides `nextflowIde.runPipeline`, `nextflowIde.resumeRun`, `nextflowIde.stopRun`, `nextflowIde.showRunDetails`, and `nextflowIde.selectWorkspaceRoot`, plus a `qbiotic-flow Runs` Activity Bar view using the root `qbiotic.svg` brand asset. The Runs view keeps a play button in its title bar so another pipeline can be launched after runs already exist. Run supports multi-root selection, nested pipeline discovery when `main.nf` is not at the workspace root, Quick Pick entrypoint selection with an optional file-browser fallback, discovered config profiles, comma-separated profile overrides, and an optional JSON/YAML params file selected through Quick Pick with an explicit file-browser option.
 
 Activation is scoped to workspaces containing `main.nf` or to one of the contributed commands/views; the official Nextflow extension is not required.
 
@@ -40,7 +40,7 @@ The extension package typechecks against the VS Code API. Full activation scenar
 
 ## Packaging
 
-Run `pnpm run package:vsix` from the repository root to create `dist/qbiotic-flow.vsix`. The package excludes TypeScript sources, internal configuration, tests, e2e files, and local dependencies through `.vscodeignore`.
+Run `pnpm run package:vsix` from the repository root to create `dist/qbiotic-flow.vsix`. The `package` target depends on `bundle`, which uses esbuild to inline all `@nextflow-ide/*` workspace dependencies into a self-contained `dist/extension.cjs` (the extension's `main` entry point). This is required because the installed VSIX has no `node_modules`, so the workspace packages must be bundled rather than required at runtime.
 
 ## Manual Smoke Test
 
