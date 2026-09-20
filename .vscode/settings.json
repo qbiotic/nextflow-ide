@@ -4,5 +4,8 @@
         "true": true,
         "printf": true
     },
-    "nextflow.telemetry.enabled": true
+    "nextflow.telemetry.enabled": true,
+    "i18n-ally.localesPaths": [
+        "packages/ui-contracts/src/messages"
+    ]
 }
