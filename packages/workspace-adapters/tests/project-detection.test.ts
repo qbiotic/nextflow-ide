@@ -52,6 +52,23 @@ describe('NextflowWorkspaceDetector', () => {
     await expect(detector.detect('/workspace/empty')).resolves.toBeNull();
   });
 
+  it('detects a nested pipeline when the workspace root has no main.nf', async () => {
+    const workspaceRoot = '/workspace/repo';
+    const rootPath = `${workspaceRoot}/examples/minimal-pipeline`;
+    const entrypointPath = `${rootPath}/main.nf`;
+    const detector = new NextflowWorkspaceDetector(
+      new FakeWorkspaceFileSystem(new Set([entrypointPath]), [entrypointPath])
+    );
+
+    await expect(detector.detect(workspaceRoot)).resolves.toEqual({
+      rootPath,
+      entrypointPath,
+      entrypointPaths: [entrypointPath],
+      profileNames: [],
+      modulePaths: []
+    });
+  });
+
   it('allows a project without nextflow.config', async () => {
     const rootPath = '/workspace/minimal';
     const entrypointPath = `${rootPath}/main.nf`;

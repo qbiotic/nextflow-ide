@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { basename, dirname, join } from 'node:path';
 import * as vscode from 'vscode';
 import {
   createExtensionCompositionRoot,
@@ -16,12 +18,24 @@ import { RunsTreeDataProvider } from './views/runs-tree.js';
 export function activate(context: vscode.ExtensionContext): void {
   const output = vscode.window.createOutputChannel('qbiotic-flow');
   const logs = vscode.window.createOutputChannel('qbiotic-flow Logs');
-  const compositionRoot = createExtensionCompositionRoot(context, output, logs);
+  const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+  const compositionRoot = createExtensionCompositionRoot(
+    context,
+    output,
+    logs,
+    workspaceRoot ? findSharedStateRoot(workspaceRoot) : context.extensionPath
+  );
+  const detector = createWorkspaceDetector();
   let selectedWorkspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
   const runsProvider = new RunsTreeDataProvider(
     compositionRoot.getRunHistory,
-    () => selectedWorkspaceRoot
+    () => selectedWorkspaceRoot,
+    async (workspaceRoot) => (await detector.detect(workspaceRoot))?.rootPath ?? workspaceRoot
   );
+  compositionRoot.setRunChangedListener(() => runsProvider.refresh());
+  for (const workspaceFolder of vscode.workspace.workspaceFolders ?? []) {
+    void compositionRoot.recoverInterruptedRuns(workspaceFolder.uri.fsPath).then(() => runsProvider.refresh());
+  }
 
   context.subscriptions.push(
     output,
@@ -35,28 +49,30 @@ export function activate(context: vscode.ExtensionContext): void {
       }
     }),
     vscode.commands.registerCommand(RUN_PIPELINE_COMMAND, async () => {
-      const workspaceFolder = await selectWorkspaceFolder();
-      if (!workspaceFolder) {
-        void vscode.window.showWarningMessage('Open a workspace containing a Nextflow pipeline first.');
-        return;
-      }
-
-      const detector = createWorkspaceDetector();
-      const project = await detector.detect(workspaceFolder.uri.fsPath);
-      if (!project) {
-        void vscode.window.showWarningMessage('No main.nf was found in the workspace root.');
-        return;
-      }
-
-      output.show(true);
+      output.show(false);
+      output.appendLine('Run Pipeline command invoked.');
       try {
+        const workspaceFolder = await selectWorkspaceFolder();
+        if (!workspaceFolder) {
+          void vscode.window.showWarningMessage('Open a workspace containing a Nextflow pipeline first.');
+          output.appendLine('Run aborted: no workspace folder is open.');
+          return;
+        }
+
+        const project = await detector.detect(workspaceFolder.uri.fsPath);
+        if (!project) {
+          void vscode.window.showWarningMessage('No main.nf was found in the workspace root.');
+          output.appendLine(`Run aborted: no main.nf found in ${workspaceFolder.uri.fsPath}.`);
+          return;
+        }
+
         const result = await compositionRoot.runPipeline.execute({
           configuration: {
             workspaceRoot: project.rootPath,
             entrypointPath: await requestEntrypoint(project.entrypointPaths, project.entrypointPath),
             runtimeMode: 'local',
             profileNames: await requestProfiles(project.profileNames),
-            paramsFilePath: await requestParamsFile(),
+            paramsFilePath: await requestParamsFile(project.rootPath),
             workingDirectory: project.rootPath,
             resumeEnabled: false,
             args: [],
@@ -65,6 +81,7 @@ export function activate(context: vscode.ExtensionContext): void {
           initiatedBy: 'command-palette'
         });
         output.appendLine(`Started ${result.run.id}: ${result.command.displayCommand}`);
+        runsProvider.refresh();
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Unable to start the pipeline.';
         void vscode.window.showErrorMessage(message);
@@ -168,6 +185,16 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 }
 
+function findSharedStateRoot(startPath: string): string {
+  let currentPath = startPath;
+  while (true) {
+    if (existsSync(join(currentPath, '.git'))) return currentPath;
+    const parentPath = dirname(currentPath);
+    if (parentPath === currentPath) return startPath;
+    currentPath = parentPath;
+  }
+}
+
 async function selectWorkspaceFolder(): Promise<vscode.WorkspaceFolder | undefined> {
   const folders = vscode.workspace.workspaceFolders ?? [];
   if (folders.length <= 1) {
@@ -196,23 +223,56 @@ async function requestEntrypoint(
   entrypointPaths: readonly string[],
   defaultEntrypoint: string
 ): Promise<string> {
-  if (entrypointPaths.length <= 1) return defaultEntrypoint;
-  const selected = await vscode.window.showQuickPick(
-    entrypointPaths.map((path) => ({ label: path.split('/').at(-1) ?? path, description: path, path })),
-    { placeHolder: 'Select the Nextflow entrypoint' }
+  const browseLabel = 'Browse for another .nf file...';
+  const selection = await vscode.window.showQuickPick(
+    [
+      ...entrypointPaths.map((path) => ({
+        label: basename(path),
+        description: path,
+        path
+      })),
+      { label: browseLabel, description: 'Choose a Nextflow file outside the detected project', path: undefined }
+    ],
+    { title: 'Select Nextflow entrypoint', placeHolder: defaultEntrypoint }
   );
-  return selected?.path ?? defaultEntrypoint;
+
+  if (!selection) return defaultEntrypoint;
+  if (selection.path) return selection.path;
+
+  const browsed = await vscode.window.showOpenDialog({
+    title: 'Select Nextflow entrypoint',
+    defaultUri: vscode.Uri.file(defaultEntrypoint),
+    canSelectFiles: true,
+    canSelectFolders: false,
+    canSelectMany: false,
+    openLabel: 'Use Entrypoint',
+    filters: { 'Nextflow files': ['nf'] }
+  });
+  return browsed?.[0]?.fsPath ?? defaultEntrypoint;
 }
 
-async function requestParamsFile(): Promise<string | undefined> {
-  const selection = await vscode.window.showOpenDialog({
+async function requestParamsFile(workspaceRoot: string): Promise<string | undefined> {
+  const browseLabel = 'Browse for a params file...';
+  const selection = await vscode.window.showQuickPick(
+    [
+      { label: 'No params file', description: 'Run without a params file', path: undefined },
+      { label: browseLabel, description: 'Choose an optional JSON or YAML file', path: browseLabel }
+    ],
+    { title: 'Select optional params file', placeHolder: 'No params file' }
+  );
+
+  if (!selection?.path) return undefined;
+
+  const browsed = await vscode.window.showOpenDialog({
+    title: 'Select optional params file',
+    defaultUri: vscode.Uri.file(workspaceRoot),
     canSelectFiles: true,
     canSelectFolders: false,
     canSelectMany: false,
     openLabel: 'Use Params File',
     filters: { 'Parameter files': ['json', 'yaml', 'yml'] }
   });
-  return selection?.[0]?.fsPath;
+  return browsed?.[0]?.fsPath;
 }
 
 function renderRunDetails(

@@ -12,12 +12,21 @@
         "command": "vitest run --config vitest.config.mts packages/vscode-extension/tests"
       }
     },
+    "bundle": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "../../node_modules/.bin/esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --outfile=dist/extension.cjs --sourcemap",
+        "cwd": "packages/vscode-extension"
+      },
+      "dependsOn": ["build"]
+    },
     "package": {
       "executor": "nx:run-commands",
       "options": {
         "command": "mkdir -p ../../dist && ../../node_modules/.bin/vsce package --no-dependencies --skip-license --allow-missing-repository --out ../../dist/qbiotic-flow.vsix",
         "cwd": "packages/vscode-extension"
-      }
+      },
+      "dependsOn": ["bundle"]
     }
   }
 }

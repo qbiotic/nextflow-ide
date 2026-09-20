@@ -3,4 +3,5 @@ packages:
 autoInstallPeers: true
 allowBuilds:
   '@vscode/vsce-sign': true
+  esbuild: true
   nx: true

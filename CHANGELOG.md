@@ -6,6 +6,11 @@ The public product name is **qbiotic-flow**. The author is Pablo Pimàs Verge ([
 
 ## [Unreleased] 2026-09-??
 
+### feature/activity-bar
+
+- Added a dedicated qbiotic-flow Activity Bar container using the `qbiotic.svg` brand icon.
+- Moved the Runs view into the qbiotic-flow Activity Bar surface.
+
 ### feature/qbiotic-flow-branding
 
 - Branded the public VS Code extension as `qbiotic-flow`.
