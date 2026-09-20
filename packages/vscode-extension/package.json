@@ -5,7 +5,7 @@
     "name": "Pablo Pimàs Verge",
     "email": "pablo@pimas.cat"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "type": "module",
   "displayName": "qbiotic-flow",
@@ -14,16 +14,7 @@
     "vscode": "^1.104.0"
   },
   "categories": ["Other"],
-  "activationEvents": [
-    "workspaceContains:main.nf",
-    "onCommand:nextflowIde.runPipeline",
-    "onCommand:nextflowIde.resumeRun",
-    "onCommand:nextflowIde.stopRun"
-    ,"onCommand:nextflowIde.showRunDetails"
-    ,"onCommand:nextflowIde.openArtifact"
-    ,"onCommand:nextflowIde.selectWorkspaceRoot"
-    ,"onView:nextflowIde.runs"
-  ],
+  "activationEvents": ["workspaceContains:main.nf"],
   "contributes": {
     "commands": [
       {
@@ -59,6 +50,12 @@
         }
       ]
     },
+    "viewsWelcome": [
+      {
+        "view": "nextflowIde.runs",
+        "contents": "Run a Nextflow pipeline to see its executions here.\n\n[Run Pipeline](command:nextflowIde.runPipeline)"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -68,15 +65,19 @@
         }
       ]
     },
-    "viewsWelcome": [
-      {
-        "view": "nextflowIde.runs",
-        "contents": "Run qbiotic-flow to see pipeline executions."
-      }
-    ]
+    "menus": {
+      "view/title": [
+        {
+          "command": "nextflowIde.runPipeline",
+          "when": "view == nextflowIde.runs",
+          "group": "navigation",
+          "icon": "$(play)"
+        }
+      ]
+    }
   },
   "keywords": ["nextflow", "vscode", "bioinformatics"],
-  "main": "./dist/index.js",
+  "main": "./dist/extension.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {

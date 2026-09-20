@@ -12,4 +12,4 @@ flowchart TD
 
 The adapter returns normalized project data through `WorkspaceProjectGateway`.
 
-The detector requires `main.nf` at the selected workspace root, discovers additional root-level `.nf` entrypoints, reads optional `nextflow.config`, extracts names from the `profiles {}` block, and separates nested `.nf` files as modules.
+The detector prefers `main.nf` at the selected workspace root, but falls back to the first nested `main.nf` found inside that workspace when needed. It discovers additional root-level `.nf` entrypoints for the detected pipeline root, reads optional `nextflow.config`, extracts names from the `profiles {}` block, and separates nested `.nf` files as modules.

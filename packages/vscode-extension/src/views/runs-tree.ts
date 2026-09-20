@@ -9,7 +9,8 @@ export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem
 
   public constructor(
     private readonly getRunHistory: GetRunHistoryUseCase,
-    private workspaceRoot: () => string | undefined
+    private workspaceRoot: () => string | undefined,
+    private readonly resolveProjectRoot: (workspaceRoot: string) => Promise<string>
   ) {}
 
   public refresh(): void {
@@ -32,7 +33,8 @@ export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem
     }
 
     try {
-      const result = await this.getRunHistory.execute({ workspaceRoot });
+      const projectRoot = await this.resolveProjectRoot(workspaceRoot);
+      const result = await this.getRunHistory.execute({ workspaceRoot: projectRoot });
       return result.runs.length > 0
         ? toRunListItems(result.runs).map(({ id }) => new RunTreeItem(result.runs.find((run) => run.id === id)!))
         : [new RunsMessageItem('No runs yet.')];
@@ -44,10 +46,13 @@ export class RunsTreeDataProvider implements vscode.TreeDataProvider<RunTreeItem
 }
 
 export class RunsMessageItem extends vscode.TreeItem {
-  public constructor(message: string) {
+  public constructor(message: string, command?: string) {
     super(message, vscode.TreeItemCollapsibleState.None);
     this.contextValue = 'qbioticFlowRuns.message';
     this.iconPath = new vscode.ThemeIcon('info');
+    if (command) {
+      this.command = { command, title: 'Run Pipeline' };
+    }
   }
 }
 

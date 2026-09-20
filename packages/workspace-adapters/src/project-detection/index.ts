@@ -18,27 +18,38 @@ export class NextflowWorkspaceDetector implements WorkspaceProjectGateway {
   public constructor(private readonly fileSystem: WorkspaceFileSystem) {}
 
   public async detect(workspaceRoot: string): Promise<WorkspaceProject | null> {
-    const entrypointPath = join(workspaceRoot, 'main.nf');
-    if (!(await this.fileSystem.exists(entrypointPath))) {
+    const detectedRoot = await this.resolveProjectRoot(workspaceRoot);
+    if (!detectedRoot) {
       return null;
     }
 
-    const configPath = join(workspaceRoot, 'nextflow.config');
-    const scriptPaths = await this.fileSystem.findFiles(workspaceRoot, '*.nf');
-    const entrypointPaths = scriptPaths.filter((path) => dirname(path) === workspaceRoot);
+    const entrypointPath = join(detectedRoot, 'main.nf');
+    const configPath = join(detectedRoot, 'nextflow.config');
+    const scriptPaths = await this.fileSystem.findFiles(detectedRoot, '*.nf');
+    const entrypointPaths = scriptPaths.filter((path) => dirname(path) === detectedRoot);
     const selectedEntrypoint = entrypointPaths.includes(entrypointPath)
       ? entrypointPath
       : entrypointPaths[0] ?? entrypointPath;
     const configText = await this.fileSystem.readText(configPath);
 
     return {
-      rootPath: workspaceRoot,
+      rootPath: detectedRoot,
       entrypointPath: selectedEntrypoint,
       entrypointPaths: entrypointPaths.length > 0 ? entrypointPaths : [entrypointPath],
       ...(await this.fileSystem.exists(configPath) ? { configPath } : {}),
       profileNames: extractProfileNames(configText ?? ''),
       modulePaths: scriptPaths.filter((path) => !entrypointPaths.includes(path))
     };
+  }
+
+  private async resolveProjectRoot(workspaceRoot: string): Promise<string | null> {
+    const rootEntrypointPath = join(workspaceRoot, 'main.nf');
+    if (await this.fileSystem.exists(rootEntrypointPath)) {
+      return workspaceRoot;
+    }
+
+    const discoveredEntrypoints = [...await this.fileSystem.findFiles(workspaceRoot, 'main.nf')].sort();
+    return discoveredEntrypoints[0] ? dirname(discoveredEntrypoints[0]) : null;
   }
 }
 
